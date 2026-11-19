@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IKONA — catatan kerja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TEMA B — "SPEC SHEET" / lembar spesifikasi teknis
+   Kertas hangat + grid tipis + rel metadata monospace.
+   Tanpa kartu, tanpa bayangan: hanya garis rambut dan angka.
+   ============================================================ */
+:root{
+  --paper:#FAFAF8;
+  --ink:#141414;
+  --ink-2:#4A4A46;
+  --ink-3:#70706A;
+  --rule:#DEDEDA;
+  --grid:rgba(20,20,20,.045);
+  --accent:#141414;   /* terakota */
+  --positive:#4A4A46; /* hanya untuk angka hasil */
+  --serif:"Instrument Serif",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.62;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:34px 34px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 36px}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- header ---------- */
+.top{border-bottom:1px solid var(--rule);background:rgba(251,250,246,.92);
+  position:sticky;top:0;z-index:10;backdrop-filter:blur(8px)}
+.top-in{display:grid;grid-template-columns:180px 1fr auto;align-items:center;height:62px;gap:24px}
+.brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand b{font-weight:500}
+.top-links{display:flex;gap:22px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.top-links a{text-decoration:none;color:var(--ink-3)}
+.top-links a:hover{color:var(--ink)}
+.stamp{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  border:1px solid var(--rule);padding:5px 9px;background:var(--paper)}
+
+/* ---------- hero ---------- */
+.hero{padding:78px 0 64px;border-bottom:1px solid var(--rule)}
+.hero-grid{display:grid;grid-template-columns:180px 1fr;gap:36px;align-items:start}
+.hero-meta{border-left:2px solid var(--accent);padding-left:14px;display:grid;gap:16px}
+.hero-meta .k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:3px}
+.hero-meta .v{font-size:13.5px;color:var(--ink)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5.4vw,74px);line-height:1.0;
+  letter-spacing:-.02em;margin:0 0 22px}
+h1 em{font-style:italic;color:var(--accent);white-space:nowrap}
+.lede{max-width:560px;color:var(--ink-2);font-size:17.5px;margin:0 0 34px}
+
+/* tabel bukti, bukan chip */
+.spec{border-top:1px solid var(--rule);max-width:640px}
+.spec-row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
+  padding:9px 0;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:12px}
+.spec-row .lbl{color:var(--ink-3);letter-spacing:.04em}
+.spec-row .val{color:var(--ink);font-weight:500}
+.spec-row .val em{font-style:normal;color:var(--positive)}
+
+.actions{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;align-items:center}
+.btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  padding:11px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{opacity:.85}
+
+/* ---------- sections ---------- */
+section{padding:64px 0;border-bottom:1px solid var(--rule)}
+.sec{display:grid;grid-template-columns:180px 1fr;gap:36px;align-items:start}
+.sec-rail{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  border-top:2px solid var(--ink);padding-top:10px}
+.sec-rail .fig{display:block;color:var(--ink);margin-bottom:4px;font-size:11.5px}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,36px);line-height:1.12;
+  letter-spacing:-.01em;margin:0 0 24px}
+
+/* daftar kerja: baris berspek, bukan kartu */
+.work{border-top:1px solid var(--rule)}
+.item{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--rule);
+  text-decoration:none;position:relative;transition:background .18s}
+.item:hover{background:rgba(0,0,0,.03)}
+.item .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding-top:4px}
+.item h3{margin:0 0 6px;font-size:19px;font-weight:600;letter-spacing:-.01em}
+.item p{margin:0 0 12px;color:var(--ink-2);font-size:14.5px;max-width:620px}
+.item .m{display:flex;flex-wrap:wrap;gap:18px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.item .m b{color:var(--ink);font-weight:500}
+.item .m span::before{content:"—";margin-right:7px;color:var(--rule)}
+.item .go{position:absolute;right:0;top:24px;font-family:var(--mono);font-size:13px;color:var(--rule)}
+.item:hover .go{color:var(--accent)}
+.diffrow{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.diffrow .old{color:#70706A;text-decoration:line-through;text-decoration-color:rgba(90,87,76,.45)}
+.diffrow .new{color:#4A4A46}
+
+/* cara kerja */
+.how{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 18px 34px;font-size:15px}
+.steps li::before{content:counter(s) ".";position:absolute;left:0;top:0;font-family:var(--mono);font-size:11px;
+  color:var(--accent)}
+.steps b{display:block;font-size:15.5px;margin-bottom:2px}
+.steps span{color:var(--ink-2)}
+.split-table{border-top:1px solid var(--rule);font-family:var(--mono);font-size:12px}
+.split-table div{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:9px 0;border-bottom:1px solid var(--rule)}
+.split-table .who{color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.split-table .what{color:var(--ink);font-family:var(--sans);font-size:14px}
+.rule-note{margin-top:16px;font-family:var(--mono);font-size:11.5px;color:var(--accent)}
+
+/* tentang */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.about p{color:var(--ink-2);margin:0 0 14px}
+.about p:first-child{color:var(--ink);font-size:17.5px}
+.facts{border-top:1px solid var(--rule)}
+.facts div{display:grid;grid-template-columns:1fr auto;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px}
+.facts dt{color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px;padding-top:2px}
+.facts dd{margin:0;color:var(--ink)}
+
+/* kontak */
+.contact{padding:72px 0 80px;border-bottom:0}
+.contact h2{font-size:clamp(30px,4.4vw,52px);max-width:820px;line-height:1.06}
+.contact p{color:var(--ink-2);max-width:520px;margin:18px 0 26px}
+.mail{font-family:var(--mono);font-size:14px;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
+
+footer{border-top:1px solid var(--rule);padding:22px 0;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.foot-in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+::selection{background:rgba(0,0,0,.12)}
+
+@media (max-width:900px){
+  .top-in{grid-template-columns:1fr auto}
+  .top-links{display:none}
+  .hero-grid,.sec,.how,.about{grid-template-columns:1fr;gap:22px}
+  .hero-meta{display:flex;gap:22px;flex-wrap:wrap;border-left:0;border-top:2px solid var(--accent);padding:10px 0 0}
+  .sec-rail{border-top:1px solid var(--ink)}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .wrap{padding:0 20px}
+  .hero{padding:48px 0 44px}
+  section{padding:46px 0}
+  .item{grid-template-columns:34px 1fr}
+  .item .m{gap:10px}
+  .item .m span::before{display:none}
+  .contact h2{font-size:29px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#"><b>IKONA</b> / catatan kerja</a>
+    <nav class="top-links">
+      <a href="#work">01 Kerja</a><a href="#how">02 Cara kerja</a><a href="#about">03 Tentang</a>
+    </nav>
+    <span class="stamp">Blitar · 2026</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <aside class="hero-meta">
+      <div><span class="k">Bidang</span><span class="v">Data &amp; otomasi</span></div>
+      <div><span class="k">Lokasi</span><span class="v">Blitar, Jawa Timur</span></div>
+      <div><span class="k">Status</span><span class="v">Terbuka proyek kecil</span></div>
+      <div><span class="k">Diperbarui</span><span class="v">Okt 2026</span></div>
+    </aside>
+
+    <div>
+      <h1>Alat kecil yang<br>menghilangkan <em>pekerjaan manual</em>.</h1>
+      <p class="lede">Parser data, pipeline riset otomatis, dan sistem kasir untuk usaha kecil.
+        Tiga benda yang berjalan — bukan daftar teknologi.</p>
+
+      <div class="spec">
+        <div class="spec-row"><span class="lbl">test otomatis</span><span class="val">109 lulus</span></div>
+        <div class="spec-row"><span class="lbl">waktu inspeksi file</span><span class="val">7,8 s <em>→ 4,5 s</em></span></div>
+        <div class="spec-row"><span class="lbl">job harian berjalan</span><span class="val">5</span></div>
+        <div class="spec-row"><span class="lbl">emiten ter-cache</span><span class="val">600</span></div>
+      </div>
+
+      <div class="actions">
+        <a class="btn" href="#work">Lihat kerja</a>
+        <a class="btn ghost" href="#how">Cara kerja</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap sec">
+    <div class="sec-rail"><span class="fig">01</span>Kerja<br>2025—2026</div>
+    <div>
+      <h2>Tiga hal yang saya bangun dan pakai sendiri</h2>
+      <div class="work">
+        <a class="item" href="#">
+          <div class="n">01</div>
+          <div>
+            <h3>CleanScript — mesin pembersih data Excel/CSV</h3>
+            <p>Tanggal 21 format, CSV titik-koma, newline di dalam sel, serial Excel. Dibersihkan otomatis; sisa masalah dilaporkan di workbook temuan.</p>
+            <div class="diffrow"><span class="old">"31/02/2026" · "Rp 1.250.000"</span><span>→</span><span class="new">ditandai · 1250000</span></div>
+            <div class="m"><span>inspeksi <b>7,8 s → 4,5 s</b></span><span><b>109</b> test</span><span><b>4</b> sheet</span><span>Python · FastAPI · Pandas</span></div>
+          </div>
+          <span class="go">→</span>
+        </a>
+        <a class="item" href="#">
+          <div class="n">02</div>
+          <div>
+            <h3>Toolkit riset IDX — pipeline screening otomatis</h3>
+            <p>Screening ratusan emiten harian: data pasar, verifikasi broker, filter tanggal dividen, gerbang kepatuhan, laporan pagi dan sore tanpa disentuh manusia.</p>
+            <div class="m"><span><b>5</b> job harian</span><span><b>600</b> emiten</span><span>nol intervensi</span><span>Python · SQLite · Cron</span></div>
+          </div>
+          <span class="go">→</span>
+        </a>
+        <a class="item" href="#">
+          <div class="n">03</div>
+          <div>
+            <h3>Kasir Warung — HPP per porsi, offline-first</h3>
+            <p>Menghitung HPP dari resep, mencatat kanal penjualan, dan mengirim ringkasan harian ke pemilik lewat WhatsApp.</p>
+            <div class="m"><span>offline-first</span><span>printer 58 mm</span><span>status: dibangun</span><span>Mobile · SQLite</span></div>
+          </div>
+          <span class="go">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap sec">
+    <div class="sec-rail"><span class="fig">02</span>Cara kerja</div>
+    <div>
+      <h2>AI untuk kecepatan, bukan untuk berpikir</h2>
+      <div class="how">
+        <ol class="steps">
+          <li><b>Pahami masalahnya dulu</b><span>Satu hari membaca data asli dan bicara dengan pemakainya.</span></li>
+          <li><b>Kunci model data</b><span>Struktur yang benar membuat sisanya mudah.</span></li>
+          <li><b>Bangun sempit, uji lebar</b><span>Fitur sesedikit mungkin, test sebanyak mungkin.</span></li>
+          <li><b>Ukur, lalu perbaiki</b><span>Tanpa angka sebelum-sesudah, itu bukan perbaikan.</span></li>
+        </ol>
+        <div>
+          <div class="split-table">
+            <div><span class="who">AI</span><span class="what">Boilerplate, migrasi, refactor mekanis, draf test pertama</span></div>
+            <div><span class="who">Saya</span><span class="what">Model data, arsitektur, membaca hasil, verifikasi lewat test</span></div>
+          </div>
+          <div class="rule-note">Aturan: tidak ada kode AI masuk tanpa test.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap sec">
+    <div class="sec-rail"><span class="fig">03</span>Tentang</div>
+    <div class="about">
+      <div>
+        <p>Saya bekerja penuh waktu di salah satu bank BUMN sebagai tenaga kontrak, dan membangun perangkat di sisa waktu — karena tidak ada yang menjualnya.</p>
+        <p>Fokus saya sempit: data yang berantakan dan proses yang berulang. Saya lebih tertarik pada alat yang dipakai 20 kali sehari daripada aplikasi yang dipamerkan sekali.</p>
+      </div>
+      <dl class="facts">
+        <div><dt>Lokasi</dt><dd>Blitar, Jawa Timur</dd></div>
+        <div><dt>Fokus</dt><dd>Data &amp; otomasi</dd></div>
+        <div><dt>Stack</dt><dd>Python · TS · SQLite</dd></div>
+        <div><dt>Balasan</dt><dd>1–2 hari</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="wrap">
+    <div class="mono" style="margin-bottom:16px">04 · Kontak</div>
+    <h2>Ada proses manual yang menyita waktu setiap minggu? Ceritakan.</h2>
+    <p>Saya membalas dalam 1–2 hari, dan biasanya sudah bisa menebak apakah masalahnya layak diotomasi.</p>
+    <a class="mail" href="mailto:halo@ikona.dev">halo@ikona.dev →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 IKONA — catatan kerja</span>
+    <span>Dibangun sendiri, dengan AI sebagai alat</span>
+  </div>
+</footer>
+
+</body>
+</html>

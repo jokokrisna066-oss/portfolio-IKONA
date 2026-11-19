@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IKONA — alat kecil, dikerjakan dengan tangan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TEMA D — "FUTURE RUSTIC"
+   Arang hangat + tembaga. Serif tua untuk judul, mono untuk label,
+   garis tembaga 1px, dan cahaya lembut di sudut — bengkel tahun 2040.
+   ============================================================ */
+:root{
+  --bg:#14120F;
+  --bg-2:#1A1713;
+  --fg:#F1E8D8;
+  --fg-2:#B3A894;
+  --fg-3:#847B6A;
+  --rule:#2B2620;
+  --copper:#C98A55;
+  --copper-lt:#E3B888;
+  --sage:#8EA58C;
+  --serif:"Instrument Serif",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--fg);font-family:var(--sans);font-weight:300;font-size:16.5px;line-height:1.66;
+  background:
+    radial-gradient(900px 520px at 82% -8%, rgba(201,138,85,.14), transparent 62%),
+    radial-gradient(700px 420px at 6% 30%, rgba(201,138,85,.05), transparent 70%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased;position:relative;
+}
+/* butir halus — tekstur kertas pasir, bukan noise digital */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,240,220,.045) .6px, transparent .7px);
+  background-size:3px 3px}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 34px;position:relative;z-index:1}
+.mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3)}
+
+/* nav */
+.top{position:sticky;top:0;z-index:20;border-bottom:1px solid var(--rule);
+  background:rgba(20,18,15,.82);backdrop-filter:blur(12px)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:24px}
+.brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;
+  text-decoration:none;color:var(--fg)}
+.brand i{color:var(--copper);font-style:normal}
+.links{display:flex;gap:26px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.links a{color:var(--fg-3);text-decoration:none;transition:color .2s}
+.links a:hover{color:var(--copper-lt)}
+.stamp{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--copper);border:1px solid rgba(201,138,85,.35);padding:5px 9px;border-radius:2px}
+
+/* hero */
+.hero{padding:104px 0 82px;border-bottom:1px solid var(--rule);position:relative}
+.hero .mono{display:block;margin-bottom:28px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6.6vw,88px);line-height:.97;
+  letter-spacing:-.022em;margin:0 0 26px;max-width:920px}
+h1 em{font-style:italic;white-space:nowrap;
+  background:linear-gradient(96deg,var(--copper) 8%,var(--copper-lt) 58%,#F2D6B4 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{max-width:540px;color:var(--fg-2);font-size:17.5px;margin:0 0 42px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);margin-bottom:38px}
+.stat{padding:16px 18px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:0}
+.stat .n{font-family:var(--serif);font-size:31px;line-height:1;display:block;margin-bottom:7px;color:#F6EDDD}
+
+.stat .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.cta{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  text-decoration:none;padding:12px 18px;border:1px solid var(--copper);color:#1A1713;
+  background:linear-gradient(180deg,var(--copper-lt),var(--copper));transition:filter .2s,transform .2s}
+.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--copper);color:var(--copper-lt)}
+.hint{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--fg-3)}
+
+/* section dengan rail angka besar */
+section{padding:78px 0;border-bottom:1px solid var(--rule)}
+.sechead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px}
+.sechead .idx{font-family:var(--serif);font-size:64px;line-height:.8;color:#2E2822;
+  -webkit-text-stroke:1px rgba(201,138,85,.35);color:transparent}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.8vw,42px);line-height:1.1;
+  letter-spacing:-.01em;margin:0;max-width:640px}
+
+/* work */
+.work{border-top:1px solid var(--rule)}
+.row{display:grid;grid-template-columns:64px 1fr auto;gap:26px;padding:28px 0;border-bottom:1px solid var(--rule);
+  text-decoration:none;position:relative;transition:background .25s}
+.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--copper);
+  transform:scaleY(0);transform-origin:top;transition:transform .3s}
+.row:hover{background:linear-gradient(90deg,rgba(201,138,85,.07),transparent 55%)}
+.row:hover::before{transform:scaleY(1)}
+.row .num{font-family:var(--mono);font-size:10.5px;color:var(--copper);padding-top:5px;letter-spacing:.1em}
+.row h3{margin:0 0 7px;font-size:19px;font-weight:400;letter-spacing:-.005em;color:#F6EDDD}
+.row p{margin:0 0 13px;color:var(--fg-2);font-size:14.5px;max-width:600px}
+.row .m{display:flex;flex-wrap:wrap;gap:18px;font-family:var(--mono);font-size:10.5px;color:var(--fg-3);
+  letter-spacing:.04em}
+.row .m b{color:var(--fg);font-weight:500}
+.row .m .gain{color:var(--sage)}
+.row .go{align-self:center;font-family:var(--mono);color:#3A332B;transition:color .2s,transform .2s}
+.row:hover .go{color:var(--copper);transform:translateX(3px)}
+
+/* how */
+.how{display:grid;grid-template-columns:1fr .92fr;gap:54px}
+.steps{counter-reset:s;list-style:none;margin:0;padding:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 22px 34px;font-size:15px;color:var(--fg-2)}
+.steps li::before{content:"0" counter(s);position:absolute;left:0;top:2px;font-family:var(--mono);
+  font-size:10px;color:var(--copper);letter-spacing:.08em}
+.steps b{display:block;color:#F6EDDD;font-size:15.5px;font-weight:400;margin-bottom:3px}
+.boundary{border:1px solid var(--rule);background:rgba(255,240,220,.018);padding:22px}
+.boundary h4{margin:0 0 14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--fg-3);font-weight:400}
+.pair{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--rule)}
+.pair .tag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding-top:4px}
+.pair .tag.ai{color:var(--sage)}
+.pair .tag.me{color:var(--copper)}
+.pair .txt{font-size:13.5px;color:var(--fg-2)}
+.rule-note{margin-top:14px;font-family:var(--mono);font-size:10.5px;color:var(--copper);letter-spacing:.04em}
+
+/* about */
+.about{display:grid;grid-template-columns:1.12fr .88fr;gap:52px}
+.about p{color:var(--fg-2);margin:0 0 14px}
+.about p:first-child{color:var(--fg);font-size:17.5px}
+.facts{border-top:1px solid var(--rule)}
+.facts div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.04em}
+.facts dt{color:var(--fg-3);text-transform:uppercase;font-size:9.5px;letter-spacing:.14em;padding-top:2px}
+.facts dd{margin:0;color:var(--fg)}
+
+/* contact */
+.contact{padding:98px 0 90px;border-bottom:0}
+.contact h2{font-size:clamp(32px,5vw,60px);max-width:880px;line-height:1.03}
+.contact p{color:var(--fg-2);max-width:520px;margin:20px 0 30px}
+.mail{font-family:var(--mono);font-size:14px;text-decoration:none;color:var(--copper-lt);
+  border-bottom:1px solid rgba(201,138,85,.5);padding-bottom:3px}
+
+footer{border-top:1px solid var(--rule);padding:22px 0;overflow:hidden}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3)}
+.wordmark{font-family:var(--serif);font-size:clamp(80px,15vw,210px);line-height:.9;letter-spacing:-.02em;
+  color:rgba(201,138,85,.10);margin:26px 0 -6px;user-select:none;white-space:nowrap}
+
+a:focus-visible{outline:1px solid var(--copper);outline-offset:4px}
+::selection{background:rgba(201,138,85,.25)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:920px){
+  .how,.about{grid-template-columns:1fr;gap:34px}
+  .links{display:none}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:0}
+  .stat{border-bottom:1px solid var(--rule)}
+  .stat:nth-child(3),.stat:nth-child(4){border-bottom:0}
+}
+@media (max-width:600px){
+  .wrap{padding:0 20px}
+  .hero{padding:64px 0 54px}
+  section{padding:54px 0}
+  h1{font-size:clamp(36px,9.6vw,44px)}
+  .row{grid-template-columns:36px 1fr;gap:14px}
+  .row .go{display:none}
+  .sechead .idx{font-size:46px}
+  .contact h2{font-size:30px}
+  .contact{padding:66px 0}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#">IKONA<i>.</i></a>
+    <nav class="links"><a href="#work">Kerja</a><a href="#how">Cara kerja</a><a href="#about">Tentang</a></nav>
+    <span class="stamp">Blitar · WIB</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="mono">data &amp; otomasi · alat yang dipakai, bukan dipamerkan</span>
+    <h1>Alat kecil yang menghilangkan <em>pekerjaan manual</em>.</h1>
+    <p class="lede">Parser data, pipeline riset otomatis, dan sistem kasir untuk usaha kecil.
+      Tiga benda yang berjalan — bukan daftar teknologi.</p>
+
+    <div class="stats">
+      <div class="stat"><span class="n">109</span><span class="l">test lulus</span></div>
+      <div class="stat"><span class="n">−42%</span><span class="l">waktu inspeksi</span></div>
+      <div class="stat"><span class="n">5</span><span class="l">job / hari</span></div>
+      <div class="stat"><span class="n">600</span><span class="l">emiten</span></div>
+    </div>
+
+    <div class="cta">
+      <a class="btn" href="#work">Lihat kerja</a>
+      <a class="btn ghost" href="#how">Cara kerja</a>
+      <span class="hint">Terbuka proyek kecil · 6–8 jam/minggu</span>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sechead">
+      <h2>Kerja pilihan</h2>
+      <span class="idx">01</span>
+    </div>
+    <div class="work">
+      <a class="row" href="#">
+        <span class="num">01</span>
+        <div>
+          <h3>CleanScript — mesin pembersih data Excel/CSV</h3>
+          <p>Tanggal 21 format, CSV titik-koma, newline dalam sel, serial Excel. Dibersihkan otomatis; sisa masalah masuk workbook temuan.</p>
+          <div class="m"><span>inspeksi 7,8 s <span class="gain">→ 4,5 s</span></span><span><b>109</b> test</span><span>Python · FastAPI · Pandas</span></div>
+        </div>
+        <span class="go">→</span>
+      </a>
+      <a class="row" href="#">
+        <span class="num">02</span>
+        <div>
+          <h3>Toolkit riset IDX — pipeline screening otomatis</h3>
+          <p>Screening ratusan emiten harian: data pasar, verifikasi broker, filter tanggal dividen, gerbang kepatuhan, laporan pagi dan sore.</p>
+          <div class="m"><span><b>5</b> job harian</span><span><b>600</b> emiten</span><span>Python · SQLite · Cron</span></div>
+        </div>
+        <span class="go">→</span>
+      </a>
+      <a class="row" href="#">
+        <span class="num">03</span>
+        <div>
+          <h3>Kasir Warung — HPP per porsi, offline-first</h3>
+          <p>Menghitung HPP dari resep, mencatat kanal penjualan, mengirim ringkasan harian ke pemilik lewat WhatsApp.</p>
+          <div class="m"><span>offline-first</span><span>printer 58 mm</span><span>status: dibangun</span></div>
+        </div>
+        <span class="go">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sechead">
+      <h2>AI untuk kecepatan, bukan untuk berpikir</h2>
+      <span class="idx">02</span>
+    </div>
+    <div class="how">
+      <ol class="steps">
+        <li><b>Pahami masalahnya dulu</b>Satu hari membaca data asli dan bicara dengan pemakainya. Tidak menulis kode sebelum tahu bentuk kesalahannya.</li>
+        <li><b>Kunci model data</b>Struktur yang benar membuat sisanya mudah. Ini bagian yang saya kerjakan sendiri.</li>
+        <li><b>Bangun sempit, uji lebar</b>Fitur sesedikit mungkin, test sebanyak mungkin — termasuk file terburuk.</li>
+        <li><b>Ukur, lalu perbaiki</b>Setiap perubahan harus punya angka sebelum dan sesudah.</li>
+      </ol>
+      <div class="boundary">
+        <h4>Pembagian kerja</h4>
+        <div class="pair"><span class="tag ai">AI</span><span class="txt">Boilerplate, migrasi, refactor mekanis, draf test pertama</span></div>
+        <div class="pair"><span class="tag me">Saya</span><span class="txt">Model data, arsitektur, membaca hasil, verifikasi lewat test dan data asli</span></div>
+        <div class="rule-note">Tidak ada kode AI masuk tanpa test.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sechead">
+      <h2>Bekerja di balik layar</h2>
+      <span class="idx">03</span>
+    </div>
+    <div class="about">
+      <div>
+        <p>Saya bekerja penuh waktu di salah satu bank BUMN sebagai tenaga kontrak, dan membangun perangkat di sisa waktu — karena tidak ada yang menjualnya.</p>
+        <p>Fokus saya sempit dan sengaja: data yang berantakan dan proses yang berulang. Saya lebih tertarik pada alat yang dipakai 20 kali sehari daripada aplikasi yang dipamerkan sekali.</p>
+      </div>
+      <dl class="facts">
+        <div><dt>Lokasi</dt><dd>Blitar, Jawa Timur</dd></div>
+        <div><dt>Fokus</dt><dd>Data &amp; otomasi</dd></div>
+        <div><dt>Stack</dt><dd>Python · TS · SQLite</dd></div>
+        <div><dt>Balasan</dt><dd>1–2 hari</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="wrap">
+    <span class="mono">04 / kontak</span>
+    <h2 style="margin-top:18px">Ada proses manual yang menyita waktu setiap minggu?</h2>
+    <p>Ceritakan. Saya membalas dalam 1–2 hari, dan biasanya sudah bisa menebak apakah masalahnya layak diotomasi.</p>
+    <a class="mail" href="mailto:halo@ikona.dev">halo@ikona.dev</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot"><span>© 2026 IKONA</span><span>Dibangun sendiri · AI sebagai alat</span></div>
+  <div class="wrap"><div class="wordmark" aria-hidden="true">ikona</div></div>
+</footer>
+
+</body>
+</html>
