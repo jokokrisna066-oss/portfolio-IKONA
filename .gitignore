@@ -1,0 +1,5 @@
+# artefak kerja — tidak ikut ke repo
+shots/
+shots-deploy/*.psd
+*.psd
+*.sketch
