@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CleanScript — studi kasus · IKONA</title>
-<meta name="description" content="Studi kasus: mesin pembersih data Excel/CSV. 21 format tanggal, CSV titik-koma, workbook temuan, 114 test, inspeksi 7,8 s → 4,5 s.">
+<title>CleanScript — mesin pembersih data Excel/CSV — Studi kasus · IKONA</title>
+<meta name="description" content="File kotor masuk, workbook rapi keluar. 21 format tanggal, CSV titik-koma, sel error Excel — dibersihkan otomatis, dan yang tidak bisa diperbaiki dilaporkan bukan dihapus.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CleanScript — mesin pembersih data Excel/CSV">
-<meta name="theme-color" content="#F6F4EC">
-<meta property="og:image" content="og.png">
+<meta property="og:description" content="File kotor masuk, workbook rapi keluar. 21 format tanggal, CSV titik-koma, sel error Excel — dibersihkan otomatis, dan yang tidak bisa diperbaiki dilaporkan bukan dihapus.">
+<meta property="og:image" content="https://ikona.dev/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="IKONA — file kotor masuk, workbook rapi keluar">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="og.png">
+<meta name="twitter:image" content="https://ikona.dev/og.png">
 <link rel="canonical" href="https://ikona.dev/kasus-cleanscript.html">
+<meta name="theme-color" content="#F6F4EC">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F6F4EC'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23A8492F'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,93 +27,98 @@
   --sans:"Inter",system-ui,sans-serif;--w:1120px;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;
-  line-height:1.62;-webkit-font-smoothing:antialiased}
+body{margin:0;background-color:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;
+  line-height:1.68;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(rgba(26,25,22,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(26,25,22,.04) 1px,transparent 1px);
+  background-size:34px 34px}
 a{color:inherit}
 .wrap{max-width:var(--w);margin:0 auto;padding:0 36px}
 .col{max-width:680px}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* nav */
 .top{border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:10;
   background:rgba(246,244,236,.94);backdrop-filter:blur(8px)}
 .top-in{display:flex;align-items:center;justify-content:space-between;height:62px;gap:20px}
 .back{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  text-decoration:none;color:var(--ink-3);display:flex;align-items:center;gap:8px;min-height:44px;padding:0 4px}
+  text-decoration:none;color:var(--ink-3);display:inline-flex;align-items:center;gap:8px;
+  min-height:44px;padding:0 4px}
 .back:hover{color:var(--ink)}
-.brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
-  display:inline-flex;align-items:center;min-height:44px;padding:0 6px}
+.brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+  text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:0 6px}
 .wa{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
   border:1px solid var(--ink);padding:8px 13px;background:var(--ink);color:var(--paper);
   display:inline-flex;align-items:center;min-height:44px}
 .wa:hover{background:#000}
 
-/* header studi */
-.head{padding:74px 0 44px;border-bottom:1px solid var(--rule)}
-.head .mono{display:block;margin-bottom:22px}
-h1{font-family:var(--serif);font-weight:500;font-size:clamp(38px,5.2vw,66px);line-height:1.02;
-  letter-spacing:-.015em;margin:0 0 20px;max-width:900px}
+.head{padding:64px 0 36px;border-bottom:1px solid var(--rule)}
+.head .mono{display:block;margin-bottom:20px}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.6vw,58px);line-height:1.04;
+  letter-spacing:-.015em;margin:0 0 18px;max-width:900px}
 h1 em{font-style:italic;color:var(--accent)}
-.lede{font-size:19px;color:var(--ink-2);max-width:620px;margin:0}
-.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);
-  border:1px solid var(--rule);margin-top:38px}
-.meta div{background:var(--paper);padding:14px 16px}
-.meta .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ink-3);display:block;margin-bottom:5px}
-.meta .v{font-size:14px}
+.lede{font-size:18px;color:var(--ink-2);max-width:640px;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;font-family:var(--mono);
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.meta b{color:var(--ink);font-weight:500}
 
-/* isi */
-section{padding:56px 0;border-bottom:1px solid var(--rule)}
-section:last-of-type{border-bottom:0}
-h2{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.14;
-  margin:0 0 18px;letter-spacing:-.01em}
-h3{font-size:17px;margin:0 0 8px;font-weight:600;letter-spacing:-.005em}
-p{margin:0 0 16px;color:var(--ink-2)}
-p strong{color:var(--ink);font-weight:600}
-.grid2{display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start}
-.rail{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
-  border-top:2px solid var(--ink);padding-top:10px}
-ol.dec{list-style:none;counter-reset:d;margin:0;padding:0}
-ol.dec li{counter-increment:d;position:relative;padding:0 0 22px 44px}
-ol.dec li::before{content:counter(d,decimal-leading-zero);position:absolute;left:0;top:3px;
-  font-family:var(--mono);font-size:11px;color:var(--accent)}
-ol.dec b{display:block;margin-bottom:3px;color:var(--ink)}
+/* isi artikel */
+.artikel{padding:44px 0 72px}
+.artikel .col{max-width:700px}
+.artikel h2{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.14;
+  margin:44px 0 16px;letter-spacing:-.01em}
+.artikel h3{font-size:18px;margin:30px 0 10px;font-weight:600}
+.artikel p{margin:0 0 17px;color:var(--ink-2)}
+.artikel p strong{color:var(--ink);font-weight:600}
+.artikel ul,.artikel ol{margin:0 0 18px;padding-left:22px;color:var(--ink-2)}
+.artikel li{margin-bottom:8px}
+.artikel a{border-bottom:1px solid var(--accent);text-decoration:none}
+.artikel a:hover{background:rgba(168,73,47,.08)}
+.artikel code{font-family:var(--mono);font-size:.88em;background:var(--paper-2);
+  border:1px solid var(--rule);padding:1px 5px;border-radius:3px}
+.artikel pre{background:#141413;color:#EFEBDF;padding:16px 18px;border-radius:8px;
+  overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.62;margin:0 0 20px}
+.artikel pre code{background:none;border:0;padding:0;color:inherit;font-size:inherit}
+.artikel blockquote{margin:0 0 20px;padding:2px 0 2px 18px;border-left:2px solid var(--accent);
+  color:var(--ink-2);font-family:var(--serif);font-size:19px}
+.artikel blockquote p:last-child{margin-bottom:0}
+.artikel img{display:block;max-width:100%;height:auto;border:1px solid var(--line-2);border-radius:8px;margin:0 0 10px}
+.artikel figure{margin:0 0 22px}
+.artikel figcaption{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.03em}
+.artikel table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;margin:0 0 20px}
+.artikel th,.artikel td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule)}
+.artikel th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  background:#FCFBF6;font-weight:500}
+.artikel hr{border:0;border-top:1px solid var(--rule);margin:36px 0}
 
-/* tabel hasil */
-.res{border-top:1px solid var(--rule);margin-top:8px}
-.res div{display:grid;grid-template-columns:1fr auto;gap:16px;padding:10px 0;border-bottom:1px solid var(--rule);
-  font-family:var(--mono);font-size:12px}
-.res .l{color:var(--ink-3);letter-spacing:.04em}
-.res .v{color:var(--ink)}
-.res .v em{font-style:normal;color:var(--positive)}
+/* daftar isi — chip yang bisa disentuh, bukan daftar tautan kecil */
+.toc-wrap{display:block}
+.toc-wrap .mono{display:block;margin:0 0 10px}
+.toc{border:1px solid var(--rule);background:#FCFBF6;padding:14px 16px;margin:0 0 32px;border-radius:8px}
+.toc .mono{display:block;margin-bottom:10px}
+.toc ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.toc ul ul{display:none}
+.toc li{margin:0}
+.toc a{display:inline-flex;align-items:center;min-height:44px;padding:8px 13px;border-radius:6px;
+  border:1px solid var(--rule);background:var(--paper);text-decoration:none;border-bottom:1px solid var(--rule);
+  color:var(--ink-2);font-size:13.5px;line-height:1.3}
+.toc a:hover{color:var(--ink);border-color:var(--ink-2);background:#fff}
 
-/* tiruan jendela aplikasi */
-.shot{border:1px solid var(--line-2);border-radius:10px;overflow-x:auto;background:#fff;
-  box-shadow:0 1px 0 rgba(20,20,19,.04),0 0 0 1px rgba(20,20,19,.03)}
-.shot-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid var(--rule);
-  background:var(--paper-2)}
-.shot-bar i{width:7px;height:7px;border-radius:50%;background:var(--line-2)}
-.shot-bar span{margin-left:8px;font-family:var(--mono);font-size:11px;color:#5E5B50}
-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px;min-width:420px}
-.shot img{display:block;width:100%;height:auto}
-figure.shot{margin:0}
-figcaption{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:9px;letter-spacing:.03em}
-th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);white-space:nowrap}
-th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);background:#FCFBF6;
-  font-weight:500}
-td.bad{color:#96452C}
-td.good{color:var(--positive)}
-td.flag{color:var(--accent)}
-tr:last-child td{border-bottom:0}
-figcaption{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:9px;letter-spacing:.03em}
+/* daftar tulisan (artikel/index.html) */
+.daftar{border-top:1px solid var(--rule);margin-top:8px}
+.daftar .item{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:20px 0;
+  border-bottom:1px solid var(--rule);text-decoration:none;position:relative;transition:background .18s}
+.daftar .item:hover{background:rgba(168,73,47,.045)}
+.daftar .item .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding-top:5px}
+.daftar .item h3{margin:0 0 5px;font-size:19px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.daftar .item p{margin:0;color:var(--ink-2);font-size:14.5px;max-width:620px}
+.daftar .item .go{position:absolute;right:0;top:22px;font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.daftar .item:hover .go{color:var(--accent)}
+@media (max-width:600px){.daftar .item{grid-template-columns:44px 1fr}.daftar .item .go{display:none}}
 
-/* belum selesai */
-.todo{border-left:2px solid var(--accent);padding-left:18px}
-.todo p{margin:0 0 10px}
-
-/* cta bawah */
-.next{padding:64px 0 80px;border-top:1px solid var(--rule)}
-.next h2{max-width:640px}
+.next{padding:56px 0 76px;border-top:1px solid var(--rule)}
+.next h2{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.2vw,34px);max-width:640px;
+  margin:0 0 16px;line-height:1.12}
 .btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
 .btn{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
   padding:12px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
@@ -125,17 +130,11 @@ footer{border-top:1px solid var(--rule);padding:20px 0}
   font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
 .foot a{display:inline-flex;align-items:center;min-height:44px}
 a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-@media (max-width:860px){
-  .grid2{grid-template-columns:1fr;gap:20px}
-  .meta{grid-template-columns:1fr 1fr}
-}
 @media (max-width:600px){
   .wrap{padding:0 20px}
-  .head{padding:52px 0 32px}
-  section{padding:44px 0}
-  .lede{font-size:17px}
-  th,td{padding:7px 8px;font-size:10.5px}
-  .railtxt{display:none}
+  .head{padding:48px 0 30px}
+  .artikel{padding:34px 0 56px}
+  .artikel pre{font-size:11.5px}
 }
 </style>
 </head>
@@ -143,145 +142,132 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 <header class="top">
   <div class="wrap top-in">
-    <a class="back" href="index.html">← Semua kerja</a>
+    <a class="back" href="index.html">← Beranda</a>
     <a class="brand" href="index.html">IKONA</a>
-    <a class="wa" href="https://wa.me/62XXXXXXXXXX?text=Halo%2C%20saya%20melihat%20studi%20kasus%20CleanScript.%20Saya%20punya%20file%20Excel%2FCSV%20yang%20berantakan%20dan%20ingin%20tahu%20apakah%20bisa%20dibantu." target="_blank" rel="noopener">Hubungi</a>
+    <a class="wa" href="https://wa.me/62XXXXXXXXXX?text=Halo%2C%20saya%20membaca%20tulisan%20di%20situs%20Anda%20dan%20ingin%20bertanya." target="_blank" rel="noopener">Hubungi</a>
   </div>
 </header>
 
 <main>
 <div class="head">
   <div class="wrap">
-    <span class="mono">Studi kasus 01 · 2025—2026</span>
-    <h1>File kotor masuk, <em>workbook</em> rapi keluar.</h1>
-    <p class="lede">CleanScript membaca file Excel/CSV yang dibuat manusia — judul di atas header,
-      tanggal campur aduk, CSV titik-koma — lalu mengeluarkan data bersih plus daftar hal yang
-      tidak bisa diperbaiki otomatis.</p>
-
+    <span class="mono">Studi kasus</span>
+    <h1>CleanScript — mesin pembersih data Excel/CSV</h1>
+    <p class="lede">File kotor masuk, workbook rapi keluar. 21 format tanggal, CSV titik-koma, sel error Excel — dibersihkan otomatis, dan yang tidak bisa diperbaiki dilaporkan bukan dihapus.</p>
     <div class="meta">
-      <div><span class="k">Peran</span><span class="v">Desain &amp; backend</span></div>
-      <div><span class="k">Durasi</span><span class="v">±6 minggu</span></div>
-      <div><span class="k">Stack</span><span class="v">Python · Pandas · FastAPI</span></div>
-      <div><span class="k">Status</span><span class="v">Dipakai sendiri</span></div>
+      <span><b><time datetime="2026-11-02">02 Nov 2026</time></b></span>
+      <span>Dibaca <b>±2 menit</b></span>
     </div>
   </div>
 </div>
 
-<section>
-  <div class="wrap grid2">
-    <div class="rail">01 · Masalah</div>
-    <div class="col">
-      <h2>Kelihatan rapi di Excel, <em>isinya belum tentu</em>.</h2>
-      <p>Pemilik usaha mengirim file yang terlihat wajar di Excel. Di dalamnya: tanggal yang
-        setengahnya teks, angka dengan “Rp” dan titik ribuan, baris judul di atas header,
-        dan kolom yang isinya campur antara nilai dan <span class="mono">#REF!</span>.</p>
-      <p>Membersihkan manual butuh 30–60 menit per file — dan hasilnya tidak bisa diaudit.
-        Kalau ada satu baris hilang, tidak ada yang tahu.</p>
-      <p><strong>Yang saya jaga: setiap perubahan harus bisa ditunjuk balik ke baris asalnya.</strong>
-        Cepat tapi tidak bisa dilacak, buat saya belum selesai.</p>
-    </div>
+<article class="artikel">
+  <div class="wrap">
+    <div class="col"><div class="toc-wrap"><span class="mono">Isi tulisan</span><div class="toc">
+<ul>
+<li><a href="#masalah">Masalah</a></li>
+<li><a href="#tiga-keputusan-yang-menentukan-bentuk-aplikasi">Tiga keputusan yang menentukan bentuk aplikasi</a><ul>
+<li><a href="#1-deteksi-format-bukan-menebak">1. Deteksi format, bukan menebak</a></li>
+<li><a href="#2-sampling-200-nilai-bukan-seluruh-file">2. Sampling 200 nilai, bukan seluruh file</a></li>
+<li><a href="#3-audit-bukan-hapus-diam-diam">3. Audit, bukan hapus diam-diam</a></li>
+</ul>
+</li>
+<li><a href="#bukti">Bukti</a></li>
+<li><a href="#yang-masih-belum-beres">Yang masih belum beres</a></li>
+</ul>
+</div>
+</div><h2 id="masalah">Masalah</h2>
+<p>Pemilik usaha mengirim file yang terlihat wajar di Excel. Di dalamnya: tanggal yang
+setengahnya teks, angka dengan &ldquo;Rp&rdquo; dan titik ribuan, baris judul di atas header,
+dan kolom yang isinya campur antara nilai dan <code>#REF!</code>.</p>
+<p>Membersihkan manual butuh 30–60 menit per file — dan hasilnya tidak bisa diaudit.
+Kalau ada satu baris hilang, tidak ada yang tahu.</p>
+<p><strong>Yang saya jaga: setiap perubahan harus bisa ditunjuk balik ke baris asalnya.</strong>
+Cepat tapi tidak bisa dilacak, buat saya belum selesai.</p>
+<h2 id="tiga-keputusan-yang-menentukan-bentuk-aplikasi">Tiga keputusan yang menentukan bentuk aplikasi</h2>
+<h3 id="1-deteksi-format-bukan-menebak">1. Deteksi format, bukan menebak</h3>
+<p>Parser mendukung 21 format tanggal: nama bulan Indonesia (termasuk <code>Peb</code>, <code>Agt</code>,
+<code>Nop</code>), nama hari, format ringkas <code>YYYYMMDD</code>, serial Excel 20000–60000, dan ISO+Z
+yang dipaksa year-first supaya <code>2026-10-12T08:15:30Z</code> tidak terbaca Desember.</p>
+<h3 id="2-sampling-200-nilai-bukan-seluruh-file">2. Sampling 200 nilai, bukan seluruh file</h3>
+<p>Deteksi kolom angka memakai sampel. Efeknya pada file 5.000 × 20: inspeksi
+<strong>7,8 detik → 4,5 detik</strong>. Placeholder seperti <code>#REF!</code>, <code>-</code>, <code>N/A</code> tidak dihitung
+sebagai &ldquo;bukan angka&rdquo;, supaya satu kolom uang yang punya 3 sel rusak tetap
+terdeteksi sebagai uang.</p>
+<h3 id="3-audit-bukan-hapus-diam-diam">3. Audit, bukan hapus diam-diam</h3>
+<p>Baris bermasalah tidak dibuang. Ia masuk sheet keempat — <code>Data_Perlu_Dicek</code> —
+berisi lokasi baris, kolom, nilai asli, dan jenis masalahnya. Tanggal mustahil
+seperti <code>31/02/2026</code> dibiarkan apa adanya dengan tanda, bukan dikoreksi tanpa izin.</p>
+<h2 id="bukti">Bukti</h2>
+<p>File 5.000 baris × 20 kolom, campuran tanggal rusak, angka berformat, dan sel error.</p>
+<figure>
+<img src="shots-deploy/02-clean.png" width="1280" height="577" alt="Layar CleanScript: file kotor_penjualan.csv 12 baris 7 kolom, terdeteksi 2 baris kosong dan 4 baris duplikat, tabel menampilkan tanggal campur format dan angka Rp 1.250.000">
+<figcaption>Tangkapan layar asli dari aplikasi yang berjalan, memakai file uji <span class="mono">kotor_penjualan.csv</span>.</figcaption>
+</figure>
+
+<figure>
+<img src="shots-deploy/03-hasil.png" width="1280" height="577" alt="Layar pengaturan aturan pembersihan CleanScript: hapus baris kosong, rapikan spasi, normalisasi kapitalisasi, hapus duplikat identik, standarisasi tanggal, normalisasi angka dan uang, serta opsi AI insight DeepSeek">
+<figcaption>Aturan yang bisa dipilih sebelum dijalankan. Tidak ada yang diubah tanpa Anda centang — AI hanya menjelaskan, tidak pernah mengubah data sendiri.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>ukuran</th>
+<th>hasil</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inspeksi file 5.000 × 20</td>
+<td>7,8 s → <strong>4,5 s</strong></td>
+</tr>
+<tr>
+<td>test otomatis</td>
+<td><strong>114 lulus</strong></td>
+</tr>
+<tr>
+<td>sheet keluaran</td>
+<td>Data_Cleaned · Cleaning_Report · Data_Summary · Data_Perlu_Dicek</td>
+</tr>
+<tr>
+<td>format tanggal didukung</td>
+<td>21</td>
+</tr>
+</tbody>
+</table>
+<p>Contoh hasil nyata pada <code>kotor_penjualan.csv</code>: 12 baris → 7 baris, 5 baris dibuang
+(2 kosong + 3 duplikat berbeda), 7 baris diubah, 1 sel masuk <code>Data_Perlu_Dicek</code>.
+Serial Excel <code>45678</code> → <code>2025-01-21</code>.</p>
+<h2 id="yang-masih-belum-beres">Yang masih belum beres</h2>
+<ul>
+<li><strong>Nomor HP belum diseragamkan.</strong> Kolom nomor telepon keluar apa adanya —
+  <code>0812-3456-7890</code>, <code>081298765432</code>, <code>0813 1111 2222</code> tetap berbeda-beda. Padahal
+  itu kolom yang paling sering mau dipakai untuk kirim WhatsApp massal.</li>
+<li><strong>Jam rusak membuang tanggal valid.</strong> <code>2026-10-12 25:99</code> tetap jadi 2026-10-12,
+  tapi penanda jamnya hilang tanpa catatan.</li>
+<li><strong>File 10 MB ke atas.</strong> Di atas 5.000 baris, waktu proses mulai terasa; target
+  berikutnya adalah pemrosesan bertahap, bukan sekaligus.</li>
+</ul></div>
   </div>
-</section>
-
-<section>
-  <div class="wrap grid2">
-    <div class="rail">02 · Keputusan</div>
-    <div class="col">
-      <h2>Tiga keputusan yang menentukan bentuk aplikasi</h2>
-      <ol class="dec">
-        <li><b>Deteksi format, bukan menebak</b>
-          Parser mendukung 21 format tanggal: nama bulan Indonesia (termasuk <span class="mono">Peb</span>,
-          <span class="mono">Agt</span>, <span class="mono">Nop</span>), nama hari, format ringkas
-          <span class="mono">YYYYMMDD</span>, serial Excel 20000–60000, dan ISO+Z yang dipaksa
-          year-first supaya <span class="mono">2026-10-12T08:15:30Z</span> tidak terbaca Desember.</li>
-        <li><b>Sampling 200 nilai, bukan seluruh file</b>
-          Deteksi kolom angka memakai sampel. Efeknya pada file 5.000 × 20: inspeksi
-          <strong>7,8 detik → 4,5 detik</strong>. Placeholder seperti <span class="mono">#REF!</span>,
-          <span class="mono">-</span>, <span class="mono">N/A</span> tidak dihitung sebagai
-          “bukan angka”, supaya satu kolom uang yang punya 3 sel rusak tetap terdeteksi sebagai uang.</li>
-        <li><b>Audit, bukan hapus diam-diam</b>
-          Baris bermasalah tidak dibuang. Ia masuk sheet keempat —
-          <span class="mono">Data_Perlu_Dicek</span> — berisi lokasi baris, kolom, nilai asli,
-          dan jenis masalahnya. Tanggal mustahil seperti <span class="mono">31/02/2026</span>
-          dibiarkan apa adanya dengan tanda, bukan dikoreksi tanpa izin.</li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap grid2">
-    <div class="rail">03 · Bukti</div>
-    <div class="col">
-      <h2>Hasil pada file terburuk yang saya punya</h2>
-      <p>File 5.000 baris × 20 kolom, campuran tanggal rusak, angka berformat, dan sel error.</p>
-
-      <div class="shot">
-        <div class="shot-bar"><i></i><i></i><i></i><span>CleanScript — tinjau &amp; bersihkan</span></div>
-        <img src="shots-deploy/02-clean.png" width="1280" height="577"
-          alt="Layar CleanScript: file kotor_penjualan.csv 12 baris 7 kolom, terdeteksi 2 baris kosong dan 4 baris duplikat, tabel menampilkan tanggal campur format dan angka Rp 1.250.000">
-      </div>
-      <figcaption>
-        Tangkapan layar asli dari aplikasi yang berjalan, memakai file uji <span class="mono">kotor_penjualan.csv</span>.
-        Empat baris di atasnya bisa diklik untuk melihat nilai sebelum dan sesudah setiap aturan.
-      </figcaption>
-
-      <figure class="shot" style="margin:12px 0 0">
-        <div class="shot-bar"><i></i><i></i><i></i><span>cleaned_data.xlsx — 4 sheet hasil</span></div>
-        <img src="shots-deploy/03-hasil.png" width="1280" height="577"
-          alt="Layar pengaturan aturan pembersihan CleanScript: hapus baris kosong, rapikan spasi, normalisasi kapitalisasi, hapus duplikat identik, standarisasi tanggal, normalisasi angka dan uang, serta opsi AI insight DeepSeek">
-      </figure>
-      <figcaption>
-        Aturan yang bisa dipilih sebelum dijalankan. Tidak ada yang diubah tanpa Anda centang —
-        AI hanya menjelaskan, tidak pernah mengubah data sendiri.
-      </figcaption>
-
-      <div class="res" style="margin-top:28px">
-        <div><span class="l">inspeksi file 5.000 × 20</span><span class="v">7,8 s <em>→ 4,5 s</em></span></div>
-        <div><span class="l">test otomatis</span><span class="v"><em>114</em> lulus</span></div>
-        <div><span class="l">sheet keluaran</span><span class="v">Data · Ringkasan · Temuan · Perlu Dicek</span></div>
-        <div><span class="l">format tanggal didukung</span><span class="v">21</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap grid2">
-    <div class="rail">04 · Belum selesai</div>
-    <div class="col">
-      <h2>Yang masih belum beres</h2>
-      <div class="todo">
-        <p><strong>Nomor HP belum diseragamkan.</strong> Kolom nomor telepon keluar apa adanya —
-          <span class="mono">0812-3456-7890</span>, <span class="mono">081298765432</span>,
-          <span class="mono">0813 1111 2222</span> tetap berbeda-beda. Padahal itu kolom yang
-          paling sering mau dipakai untuk kirim WhatsApp massal.</p>
-        <p><strong>Jam rusak membuang tanggal valid.</strong> <span class="mono">2026-10-12 25:99</span>
-          tetap jadi 2026-10-12, tapi penanda jamnya hilang tanpa catatan.</p>
-        <p><strong>File 10 MB ke atas.</strong> Di atas 5.000 baris, waktu proses mulai terasa;
-          target berikutnya adalah pemrosesan bertahap, bukan sekaligus.</p>
-      </div>
-    </div>
-  </div>
-</section>
+</article>
 
 <section class="next">
   <div class="wrap">
-    <h2>Ada file yang tiap bulan harus dirapikan manual?</h2>
-    <p style="max-width:560px">Kirim satu contoh file — saya balas dengan perkiraan apakah bisa
-      diotomasi, dan berapa lama prosesnya.</p>
+    <h2>Ada proses manual yang menyita waktu setiap minggu?</h2>
+    <p style="max-width:560px;color:var(--ink-2)">Kirim satu contoh — file, tangkapan layar, atau cerita
+      singkat. Saya balas dengan perkiraan apakah layak diotomasi, dan kalau tidak, saya bilang tidak.</p>
     <div class="btns">
-      <a class="btn" href="https://wa.me/62XXXXXXXXXX?text=Halo%2C%20saya%20punya%20file%20Excel%2FCSV%20yang%20berantakan.%20Boleh%20saya%20kirim%20contohnya%3F" target="_blank" rel="noopener">Kirim contoh lewat WhatsApp</a>
-      <a class="btn ghost" href="index.html#work">Lihat kerja lain</a>
+      <a class="btn" href="index.html#contact">Ceritakan proses manual Anda</a>
+      <a class="btn ghost" href="index.html#layanan">Lihat layanan &amp; harga</a>
     </div>
   </div>
 </section>
-
 </main>
 
 <footer>
   <div class="wrap foot">
-    <span>© 2026 IKONA · studi kasus 01</span>
+    <span>© 2026 IKONA</span>
     <a href="index.html">kembali ke beranda</a>
   </div>
 </footer>

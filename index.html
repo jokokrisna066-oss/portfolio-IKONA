@@ -282,7 +282,7 @@ section[id],main[id]{scroll-margin-top:104px}
   <div class="wrap top-in">
     <a class="brand" href="./"><b>IKONA</b> / catatan kerja</a>
     <nav class="top-links">
-      <a href="#layanan" aria-current="true">01 Layanan</a><a href="#work">02 Kerja</a><a href="#how">03 Cara kerja</a><a href="#about">04 Tentang</a>
+      <a href="#layanan" aria-current="true">01 Layanan</a><a href="#work">02 Kerja</a><a href="#how">03 Cara kerja</a><a href="#about">04 Tentang</a><a href="artikel/">Tulisan</a>
     </nav>
     <a class="stamp wa-stamp" href="https://wa.me/62XXXXXXXXXX?text=Halo%2C%20saya%20melihat%20portofolio%20Anda%20dan%20ingin%20bertanya." target="_blank" rel="noopener" data-track="wa-nav">WhatsApp ↗</a>
   </div>
@@ -418,30 +418,30 @@ section[id],main[id]{scroll-margin-top:104px}
       <p class="lede" style="margin-bottom:18px">Tiga alat yang saya bangun untuk pekerjaan sendiri.
         Yang pertama dan kedua jalan tiap hari; yang ketiga belum.</p>
       <div class="work">
-        <a class="item" href="kasus-cleanscript.html" data-track="case-cleanscript" aria-labelledby="k1">
+<!-- BUILD:KARTU -->
+        <a class="item" href="kasus-cleanscript.html" aria-labelledby="k01">
           <div class="n">01</div>
           <div>
-            <h3 id="k1">CleanScript — mesin pembersih data Excel/CSV</h3>
-            <p>Tanggal 21 format, CSV titik-koma, newline di dalam sel, serial Excel. Dibersihkan otomatis; sisa masalah dilaporkan di workbook temuan.</p>
-            <div class="diffrow"><span class="old">"31/02/2026" · "Rp 1.250.000"</span><span>→</span><span class="new">ditandai · 1250000</span></div>
-            <div class="m"><span>inspeksi <b>7,8 s → 4,5 s</b></span><span><b>114</b> test</span><span><b>4</b> sheet</span><span>Python · FastAPI · Pandas</span></div>
+            <h3 id="k01">CleanScript — mesin pembersih data Excel/CSV</h3>
+            <p>File kotor masuk, workbook rapi keluar. 21 format tanggal, CSV titik-koma, sel error Excel — dibersihkan otomatis, dan yang tidak bisa diperbaiki dilaporkan bukan dihapus.</p>
           </div>
           <span class="go" aria-hidden="true">→</span>
         </a>
-        <a class="item" href="kasus-idx.html" data-track="case-idx" aria-labelledby="k2">
+
+        <a class="item" href="kasus-idx.html" aria-labelledby="k02">
           <div class="n">02</div>
           <div>
-            <h3 id="k2">Toolkit riset IDX — pipeline screening otomatis</h3>
-            <p>Tiap pagi dan sore skripnya jalan sendiri: tarik data pasar, cek broker, saring
-            tanggal dividen, lalu susun laporan. Saya tinggal baca hasilnya.</p>
-            <div class="m"><span><b>16</b> job harian</span><span><b>625</b> emiten ter-cache</span><span>nol intervensi</span><span>Python · SQLite · Cron</span></div>
+            <h3 id="k02">Toolkit riset IDX — pipeline screening otomatis</h3>
+            <p>Skrip menyaring ratusan emiten tiap pagi, menolak yang gagal gerbang halal, lalu mencatat setiap keputusan ke buku simulasi. Aturannya diuji, bukan cuma dipercaya.</p>
           </div>
           <span class="go" aria-hidden="true">→</span>
         </a>
-        <a class="item" href="#layanan" data-track="kasir" aria-labelledby="k3">
+
+<!-- /BUILD:KARTU -->
+        <a class="item" href="#layanan" aria-labelledby="k03">
           <div class="n">03</div>
           <div>
-            <h3 id="k3">Kasir Warung — hitung untung per barang</h3>
+            <h3 id="k03">Kasir Warung — hitung untung per barang</h3>
             <p>Menghitung untung per barang dari harga beli, mencatat penjualan, dan mengirim ringkasan
             harian lewat WhatsApp. Tetap jalan saat internet mati.</p>
             <div class="m"><span>jalan tanpa internet</span><span>printer 58 mm</span><span>status: <b>rencana</b> — engine belum dibangun</span><span>Mobile · SQLite</span></div>
