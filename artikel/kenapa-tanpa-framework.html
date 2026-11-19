@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kenapa situs ini sengaja tidak memakai framework — Tulisan · IKONA</title>
+<meta name="description" content="Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan — dan angka yang menentukan, bukan tren.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kenapa situs ini sengaja tidak memakai framework">
+<meta property="og:description" content="Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan — dan angka yang menentukan, bukan tren.">
+<meta property="og:image" content="https://ikona.dev/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ikona.dev/og.png">
+<link rel="canonical" href="https://ikona.dev/artikel/kenapa-tanpa-framework.html">
+<meta name="theme-color" content="#F6F4EC">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F6F4EC'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23A8492F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F4EC;--paper-2:#EDEADC;--ink:#141413;--ink-2:#4A4842;--ink-3:#5E5B50;
+  --rule:#DCD6C4;--line-2:#C9C3B2;--accent:#A8492F;--positive:#4C6B52;
+  --serif:"Instrument Serif",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"Inter",system-ui,sans-serif;--w:1120px;
+}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;
+  line-height:1.68;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(rgba(26,25,22,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(26,25,22,.04) 1px,transparent 1px);
+  background-size:34px 34px}
+a{color:inherit}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 36px}
+.col{max-width:680px}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.top{border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:10;
+  background:rgba(246,244,236,.94);backdrop-filter:blur(8px)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:62px;gap:20px}
+.back{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink-3);display:inline-flex;align-items:center;gap:8px;
+  min-height:44px;padding:0 4px}
+.back:hover{color:var(--ink)}
+.brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+  text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:0 6px}
+.wa{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+  border:1px solid var(--ink);padding:8px 13px;background:var(--ink);color:var(--paper);
+  display:inline-flex;align-items:center;min-height:44px}
+.wa:hover{background:#000}
+
+.head{padding:64px 0 36px;border-bottom:1px solid var(--rule)}
+.head .mono{display:block;margin-bottom:20px}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.6vw,58px);line-height:1.04;
+  letter-spacing:-.015em;margin:0 0 18px;max-width:900px}
+h1 em{font-style:italic;color:var(--accent)}
+.lede{font-size:18px;color:var(--ink-2);max-width:640px;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;font-family:var(--mono);
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.meta b{color:var(--ink);font-weight:500}
+
+/* isi artikel */
+.artikel{padding:44px 0 72px}
+.artikel .col{max-width:700px}
+.artikel h2{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.14;
+  margin:44px 0 16px;letter-spacing:-.01em}
+.artikel h3{font-size:18px;margin:30px 0 10px;font-weight:600}
+.artikel p{margin:0 0 17px;color:var(--ink-2)}
+.artikel p strong{color:var(--ink);font-weight:600}
+.artikel ul,.artikel ol{margin:0 0 18px;padding-left:22px;color:var(--ink-2)}
+.artikel li{margin-bottom:8px}
+.artikel a{border-bottom:1px solid var(--accent);text-decoration:none}
+.artikel a:hover{background:rgba(168,73,47,.08)}
+.artikel code{font-family:var(--mono);font-size:.88em;background:var(--paper-2);
+  border:1px solid var(--rule);padding:1px 5px;border-radius:3px}
+.artikel pre{background:#141413;color:#EFEBDF;padding:16px 18px;border-radius:8px;
+  overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.62;margin:0 0 20px}
+.artikel pre code{background:none;border:0;padding:0;color:inherit;font-size:inherit}
+.artikel blockquote{margin:0 0 20px;padding:2px 0 2px 18px;border-left:2px solid var(--accent);
+  color:var(--ink-2);font-family:var(--serif);font-size:19px}
+.artikel blockquote p:last-child{margin-bottom:0}
+.artikel img{display:block;max-width:100%;height:auto;border:1px solid var(--line-2);border-radius:8px;margin:0 0 10px}
+.artikel figure{margin:0 0 22px}
+.artikel figcaption{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.03em}
+.artikel table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;margin:0 0 20px}
+.artikel th,.artikel td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule)}
+.artikel th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  background:#FCFBF6;font-weight:500}
+.artikel hr{border:0;border-top:1px solid var(--rule);margin:36px 0}
+
+/* daftar isi — chip yang bisa disentuh, bukan daftar tautan kecil */
+.toc-wrap{display:block}
+.toc-wrap .mono{display:block;margin:0 0 10px}
+.toc{border:1px solid var(--rule);background:#FCFBF6;padding:14px 16px;margin:0 0 32px;border-radius:8px}
+.toc .mono{display:block;margin-bottom:10px}
+.toc ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.toc ul ul{display:none}
+.toc li{margin:0}
+.toc a{display:inline-flex;align-items:center;min-height:44px;padding:8px 13px;border-radius:6px;
+  border:1px solid var(--rule);background:var(--paper);text-decoration:none;border-bottom:1px solid var(--rule);
+  color:var(--ink-2);font-size:13.5px;line-height:1.3}
+.toc a:hover{color:var(--ink);border-color:var(--ink-2);background:#fff}
+
+/* daftar tulisan (artikel/index.html) */
+.daftar{border-top:1px solid var(--rule);margin-top:8px}
+.daftar .item{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:20px 0;
+  border-bottom:1px solid var(--rule);text-decoration:none;position:relative;transition:background .18s}
+.daftar .item:hover{background:rgba(168,73,47,.045)}
+.daftar .item .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding-top:5px}
+.daftar .item h3{margin:0 0 5px;font-size:19px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.daftar .item p{margin:0;color:var(--ink-2);font-size:14.5px;max-width:620px}
+.daftar .item .go{position:absolute;right:0;top:22px;font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.daftar .item:hover .go{color:var(--accent)}
+@media (max-width:600px){.daftar .item{grid-template-columns:44px 1fr}.daftar .item .go{display:none}}
+
+.next{padding:56px 0 76px;border-top:1px solid var(--rule)}
+.next h2{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.2vw,34px);max-width:640px;
+  margin:0 0 16px;line-height:1.12}
+.btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
+.btn{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+  padding:12px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  min-height:44px;display:inline-flex;align-items:center}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn:hover{opacity:.85}
+footer{border-top:1px solid var(--rule);padding:20px 0}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.foot a{display:inline-flex;align-items:center;min-height:44px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:600px){
+  .wrap{padding:0 20px}
+  .head{padding:48px 0 30px}
+  .artikel{padding:34px 0 56px}
+  .artikel pre{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="back" href="../index.html">← Beranda</a>
+    <a class="brand" href="../index.html">IKONA</a>
+    <a class="wa" href="https://wa.me/62XXXXXXXXXX?text=Halo%2C%20saya%20membaca%20tulisan%20di%20situs%20Anda%20dan%20ingin%20bertanya." target="_blank" rel="noopener">Hubungi</a>
+  </div>
+</header>
+
+<main>
+<div class="head">
+  <div class="wrap">
+    <span class="mono">Tulisan</span>
+    <h1>Kenapa situs ini sengaja tidak memakai framework</h1>
+    <p class="lede">Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan — dan angka yang menentukan, bukan tren.</p>
+    <div class="meta">
+      <span><b><time datetime="2026-11-19">19 Nov 2026</time></b></span>
+      <span>Dibaca <b>±2 menit</b></span>
+    </div>
+  </div>
+</div>
+
+<article class="artikel">
+  <div class="wrap">
+    <div class="col"><div class="toc-wrap"><span class="mono">Isi tulisan</span><div class="toc">
+<ul>
+<li><a href="#angka-yang-saya-ukur">Angka yang saya ukur</a></li>
+<li><a href="#yang-sering-dianggap-masalah-tapi-bukan">Yang sering dianggap masalah, tapi bukan</a></li>
+<li><a href="#kapan-jawabannya-berubah">Kapan jawabannya berubah</a></li>
+<li><a href="#yang-sebenarnya-saya-jual-di-sini">Yang sebenarnya saya jual di sini</a></li>
+</ul>
+</div>
+</div><p>Klien dan teman sering bertanya kenapa portofolio ini bukan Next.js. Pertanyaan
+yang wajar: saya memang membangun aplikasi Next.js untuk pekerjaan lain.</p>
+<p>Jawabannya bukan karena saya belum bisa. Jawabannya karena saya mengukur dulu.</p>
+<h2 id="angka-yang-saya-ukur">Angka yang saya ukur</h2>
+<p>Saya jalankan dua-duanya di mesin yang sama, lalu catat yang terjadi.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>situs ini</th>
+<th>aplikasi Next.js saya</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permintaan saat dibuka</td>
+<td><strong>1</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td>JavaScript terkirim</td>
+<td><strong>0 KB</strong></td>
+<td><strong>118 KB</strong></td>
+</tr>
+<tr>
+<td>transfer total</td>
+<td>~31 KB</td>
+<td>125 KB</td>
+</tr>
+<tr>
+<td>first contentful paint</td>
+<td><strong>172 ms</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>DOMContentLoaded</td>
+<td><strong>68 ms</strong></td>
+<td>194 ms</td>
+</tr>
+</tbody>
+</table>
+<p>Aplikasi Next.js itu <strong>perlu</strong> 118 KB itu. Ia punya formulir, unggah berkas,
+tab, dan state yang berubah. Situs ini tidak punya satu pun dari itu — satu-satunya
+JavaScript di sini 20 baris, untuk menandai menu mana yang sedang dibaca saat
+menggulir.</p>
+<p>118 KB untuk menggantikan 20 baris bukan pertukaran yang menguntungkan.</p>
+<h2 id="yang-sering-dianggap-masalah-tapi-bukan">Yang sering dianggap masalah, tapi bukan</h2>
+<p>Kekhawatiran berikutnya biasanya soal perawatan: tanpa komponen, CSS-nya
+berulang di tiap halaman, bukan?</p>
+<p>Saya periksa. Dari tiga halaman, deklarasi CSS yang identik di ketiganya:
+<strong>satu baris.</strong> Palet <code>:root</code> memang disalin tiga kali — enam baris. Itu 2% dari
+berkas pertama, bukan masalah.</p>
+<p>&ldquo;Berulang&rdquo; jadi masalah ketika halamannya ratusan. Di tiga halaman, itu bukan
+biaya — itu kesederhanaan.</p>
+<h2 id="kapan-jawabannya-berubah">Kapan jawabannya berubah</h2>
+<p>Saya tidak akan mempertahankan pilihan ini demi gengsi. Tiga hal membaliknya:</p>
+<ol>
+<li><strong>Ada bagian yang butuh data.</strong> Daftar proyek dari API, atau halaman yang
+   tumbuh tanpa saya sentuh HTML-nya.</li>
+<li><strong>Isinya berubah terus, dan saya lelah menyunting HTML.</strong> Itu sebabnya tulisan
+   dan studi kasus di situs ini sekarang ditulis di markdown — saya hanya
+   menyentuh HTML kalau bentuk halamannya berubah.</li>
+<li><strong>Klien yang saya bidik menanyakan stack-nya.</strong> Sewaktu kecil, tidak.</li>
+</ol>
+<p>Perhatikan bahwa alasan nomor dua sudah terjadi, dan saya menyelesaikannya
+<strong>tanpa</strong> framework: markdown jadi HTML saat dibangun, dan hasilnya tetap berkas
+statis. Yang dinamis hanya saat menulis, bukan saat dibaca.</p>
+<h2 id="yang-sebenarnya-saya-jual-di-sini">Yang sebenarnya saya jual di sini</h2>
+<p>Ada godaan untuk menjadikan situs ini pajangan teknologi. Klien teknis akan
+menilai stack-nya, jadi pakai yang modern.</p>
+<p>Tapi ada versi argumen itu yang berlawanan arah. Situs yang memutuskan
+arsitekturnya dengan angka yang bisa diperiksa membuktikan penilaian. Situs yang
+menyalakan framework untuk tiga halaman statis membuktikan bisa menyalakan
+framework — dan itu bukan hal yang sama.</p>
+<p>Saya menjual kemampuan mengambil proses manual dan membuatnya jalan sendiri,
+dengan batas yang jelas. <strong>Keputusan soal alat adalah bagian dari pekerjaan itu.</strong>
+Jadi keputusan di sini saya catat di <code>README</code>, bukan disembunyikan — supaya bisa
+dibantah, dan supaya saya tidak mengulang perdebatan yang sama enam bulan lagi.</p></div>
+  </div>
+</article>
+
+<section class="next">
+  <div class="wrap">
+    <h2>Ada proses manual yang menyita waktu setiap minggu?</h2>
+    <p style="max-width:560px;color:var(--ink-2)">Kirim satu contoh — file, tangkapan layar, atau cerita
+      singkat. Saya balas dengan perkiraan apakah layak diotomasi, dan kalau tidak, saya bilang tidak.</p>
+    <div class="btns">
+      <a class="btn" href="../index.html#contact">Ceritakan proses manual Anda</a>
+      <a class="btn ghost" href="../index.html#layanan">Lihat layanan &amp; harga</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 IKONA</span>
+    <a href="../index.html">kembali ke beranda</a>
+  </div>
+</footer>
+
+</body>
+</html>

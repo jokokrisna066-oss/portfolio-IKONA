@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IKONA — program kecil untuk pekerjaan yang berulang</title>
+<meta name="description" content="Enam pekerjaan dengan harga tercantum: landing page Rp1 juta, integrasi WhatsApp Rp1,5 juta, kasir warung Rp2 juta, otomasi alur kerja dari Rp3,5 juta, custom website dari Rp4 juta, audit keamanan dari Rp5 juta.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="IKONA — program kecil untuk pekerjaan yang berulang">
+<meta property="og:description" content="Saya tidak betah mengerjakan hal yang sama dua kali. Jadi saya menulis programnya: pembersih file Excel, pemantau pasar saham, kasir warung.">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="IKONA — saya tidak betah mengerjakan hal yang sama dua kali">
+<meta name="twitter:image" content="og.png">
+<link rel="canonical" href="https://ikona.dev/">
+<meta name="theme-color" content="#F6F4EC">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F6F4EC'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23A8492F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TEMA B — "SPEC SHEET" / lembar spesifikasi teknis
+   Kertas hangat + grid tipis + rel metadata monospace.
+   Tanpa kartu, tanpa bayangan: hanya garis rambut dan angka.
+   ============================================================ */
+:root{
+  --paper:#F6F4EC;
+  --ink:#141413;
+  --ink-2:#4A4842;
+  --ink-3:#5E5B50;
+  --rule:#DCD6C4;
+  --grid:rgba(26,25,22,.04);
+  --accent:#A8492F;   /* terakota */
+  --positive:#4C6B52; /* hanya untuk angka hasil */
+  --serif:"Instrument Serif",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.62;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:34px 34px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 36px}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- header ---------- */
+.top{border-bottom:1px solid var(--rule);background:rgba(251,250,246,.92);
+  position:sticky;top:0;z-index:10;backdrop-filter:blur(8px)}
+.top-in{display:grid;grid-template-columns:180px 1fr auto;align-items:center;height:62px;gap:24px}
+.brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--ink);white-space:nowrap;display:inline-flex;align-items:center;min-height:44px}
+.brand b{font-weight:500}
+.top-links{display:flex;gap:22px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.top-links a{text-decoration:none;color:var(--ink-3);display:inline-flex;align-items:center;min-height:44px}
+.top-links a:hover{color:var(--ink)}
+.top-links a[aria-current="true"]{color:var(--ink)}
+.top-links a[aria-current="true"]::after{content:"";display:block;height:1px;background:var(--accent);
+  margin-top:4px;animation:grow .3s ease}
+@keyframes grow{from{transform:scaleX(.2)}to{transform:scaleX(1)}}
+.stamp{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  border:1px solid var(--rule);padding:5px 9px;background:var(--paper);text-decoration:none}
+.wa-stamp{color:var(--paper);background:var(--ink);border-color:var(--ink);display:inline-flex;align-items:center;min-height:38px;padding:0 14px}
+.wa-stamp:hover{background:#000}
+/* WhatsApp di header jadi tombol garis, bukan blok gelap: satu aksi utama per layar */
+@media (min-width:901px){.wa-stamp{background:transparent;color:var(--ink-3);border-color:transparent;padding:0 4px;min-height:44px}}
+@media (min-width:901px){.wa-stamp:hover{background:transparent;color:var(--ink)}}
+
+/* ---------- hero ---------- */
+.hero{padding:78px 0 64px;border-bottom:1px solid var(--rule)}
+.hero-grid{display:grid;grid-template-columns:180px 1fr;gap:36px;align-items:start}
+.hero-meta{border-left:2px solid var(--accent);padding-left:14px;display:grid;gap:16px}
+.hero-meta .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:3px}
+.hero-meta .v{font-size:14px;color:var(--ink)}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,5.4vw,74px);line-height:1.0;
+  letter-spacing:-.02em;margin:0 0 22px}
+h1 em{font-style:italic;color:var(--accent);white-space:nowrap}
+.lede{max-width:560px;color:var(--ink-2);font-size:17.5px;margin:0 0 22px}
+.who{border-left:2px solid var(--accent);padding-left:12px;color:var(--ink-2);font-size:15px;
+  margin:0 0 30px;max-width:520px}
+
+/* tabel bukti, bukan chip */
+.spec{border-top:1px solid var(--rule);max-width:640px}
+.spec-row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
+  padding:9px 0;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:12px}
+.spec-row .lbl{color:var(--ink-3);letter-spacing:.04em}
+.spec-row .val{color:var(--ink);font-weight:500}
+.spec-row .val em{font-style:normal;color:var(--positive)}
+
+.actions{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;align-items:center}
+.btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  padding:11px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  display:inline-flex;align-items:center;min-height:44px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{opacity:.85}
+
+/* ---------- sections ---------- */
+section{padding:64px 0;border-bottom:1px solid var(--rule)}
+.sec{display:grid;grid-template-columns:180px 1fr;gap:36px;align-items:start}
+.sec-rail{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  border-top:2px solid var(--ink);padding-top:10px}
+.sec-rail .fig{display:block;color:var(--ink);margin-bottom:4px;font-size:11.5px}
+h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.2vw,36px);line-height:1.12;
+  letter-spacing:-.01em;margin:0 0 24px}
+
+/* daftar kerja: baris berspek, bukan kartu */
+.work{border-top:1px solid var(--rule)}
+.item{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--rule);
+  text-decoration:none;position:relative;transition:background .18s}
+.item:hover{background:rgba(168,73,47,.045)}
+.item .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding-top:4px}
+.item h3{margin:0 0 6px;font-size:19px;font-weight:600;letter-spacing:-.01em}
+.item p{margin:0 0 12px;color:var(--ink-2);font-size:14.5px;max-width:620px}
+.item .m span:first-child::before{content:none}
+.item .m{display:flex;flex-wrap:wrap;gap:18px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.item .m b{color:var(--ink);font-weight:500}
+.item .m span::before{content:"—";margin-right:7px;color:var(--rule)}
+.item .go{position:absolute;right:0;top:24px;font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.item:hover .go{color:var(--accent)}
+.diffrow{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.diffrow .old{color:#5A574C;text-decoration:line-through;text-decoration-color:rgba(90,87,76,.45)}
+.diffrow .new{color:#3F5B45}
+
+/* layanan & harga */
+.svc{border-top:1px solid var(--rule);margin-top:18px}
+.svc-row{padding:20px 0;border-bottom:1px solid var(--rule)}
+.svc-row:last-child{border-bottom:1px solid var(--rule)}
+.svc-head{display:flex;gap:16px;align-items:baseline;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px}
+.svc-head h3{margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em}
+.svc-price{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--ink);
+  white-space:nowrap;border-bottom:2px solid var(--accent);padding-bottom:2px}
+.svc-row p{margin:0 0 10px;color:var(--ink-2);font-size:14.5px;max-width:640px}
+.svc-meta{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.svc-meta span::before{content:"—";margin-right:7px;color:var(--rule)}
+.svc-strong{background:rgba(168,73,47,.045);margin:0 -14px;padding:20px 14px}
+.svc-strong .svc-price{border-bottom-color:var(--ink)}
+.svc-note{margin-top:20px;padding-top:16px;border-top:1px solid var(--rule);
+  font-size:14px;color:var(--ink-2);max-width:640px}
+/* blok penjelasan biaya pesan WhatsApp */
+.wabill{margin-top:26px;padding:20px 0 0;border-top:1px solid var(--rule);max-width:680px}
+.wabill>p{font-size:14.5px;color:var(--ink-2);margin:0 0 12px}
+.wabill ul{margin:0 0 12px;padding-left:18px;display:grid;gap:9px}
+.wabill li{font-size:14.5px;color:var(--ink-2);line-height:1.55}
+.wabill li strong{color:var(--ink)}
+.wabill-note{font-size:13.5px;color:var(--ink-3);margin:0;padding-top:12px;
+  border-top:1px solid var(--rule)}
+
+/* pita gelap untuk bagian cara kerja (ritme bab) */
+.band{background:#141413;color:#EFEBDF;border-bottom:1px solid #141413;padding:72px 0}
+.band h2{color:#F4EFE3}
+.band .sec-rail{color:#A39E90;border-top-color:#EFEBDF}
+.band .sec-rail .fig{color:#F4EFE3}
+.band .steps li{color:#B4AE9E}
+.band .steps b{color:#F4EFE3}
+.band .steps span{color:#B4AE9E}
+.band .steps li::before{color:#D98F6B}
+.band .split-table{border-top-color:#3A372F}
+.band .split-table div{border-bottom-color:#3A372F}
+.band .split-table .who{color:#A39E90}
+.band .split-table .what{color:#EFEBDF}
+.band .rule-note{color:#D98F6B}
+
+/* cara kerja */
+.how{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 18px 34px;font-size:15px}
+.steps li::before{content:counter(s) ".";position:absolute;left:0;top:0;font-family:var(--mono);font-size:11px;
+  color:var(--accent)}
+.steps b{display:block;font-size:15.5px;margin-bottom:2px}
+.steps span{color:var(--ink-2)}
+.split-table{border-top:1px solid var(--rule);font-family:var(--mono);font-size:12px}
+.split-table div{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:9px 0;border-bottom:1px solid var(--rule)}
+.split-table .who{color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.split-table .what{color:var(--ink);font-family:var(--sans);font-size:14px}
+.rule-note{margin-top:16px;font-family:var(--mono);font-size:11.5px;color:var(--accent)}
+
+/* tentang */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.about p{color:var(--ink-2);margin:0 0 14px}
+.about p.lead{font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.42;
+  letter-spacing:-.005em;color:var(--ink);margin-bottom:20px}
+.facts{border-top:1px solid var(--rule)}
+.facts div{display:grid;grid-template-columns:1fr auto;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px}
+.facts dt{color:var(--ink-3);letter-spacing:.05em;text-transform:uppercase;font-size:11.5px;padding-top:2px}
+.facts dd{margin:0;color:var(--ink)}
+
+/* kontak */
+.contact{padding:72px 0 80px;border-bottom:0}
+.contact h2{font-size:clamp(30px,4.4vw,52px);max-width:820px;line-height:1.06}
+.contact p{color:var(--ink-2);max-width:520px;margin:18px 0 26px}
+.mail{font-family:var(--mono);font-size:14px;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
+
+footer{border-top:1px solid var(--rule);padding:22px 0;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.foot-in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);
+  padding:10px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;z-index:99;
+  display:inline-flex;align-items:center;min-height:44px}
+.skip:focus{left:12px;top:12px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* header sticky setinggi ~98px di mobile: jangan menutupi target anchor */
+html{scroll-padding-top:104px}
+section[id],main[id]{scroll-margin-top:104px}
+@media print{
+  body{background:#fff;background-image:none}
+  .top,.skip,.actions,.go{display:none!important}
+  a{text-decoration:none}
+  section{padding:18px 0;break-inside:avoid}
+  .hero{padding:0 0 18px}
+}
+::selection{background:rgba(168,73,47,.16)}
+
+@media (max-width:900px){
+  .top-in{display:grid;grid-template-columns:1fr auto;align-items:center;height:auto;
+    padding:4px 20px 0;row-gap:0}
+  .brand{grid-column:1;grid-row:1;min-height:44px}
+  .stamp{grid-column:2;grid-row:1;justify-self:end;min-height:44px}
+  .top-links{grid-column:1/-1;grid-row:2;display:flex;gap:12px;overflow-x:auto;font-size:11px;
+    letter-spacing:.05em;padding:0 0 6px;scrollbar-width:none}
+  .top-links::-webkit-scrollbar{display:none}
+  .top-links a{min-height:30px;display:inline-flex;align-items:center;white-space:nowrap}
+  .hero-grid,.sec,.how,.about{grid-template-columns:1fr;gap:22px}
+  .hero-grid>div{order:1}
+  .hero-meta{order:2;margin-top:26px;display:flex;gap:10px 26px;flex-wrap:wrap;
+    border-left:0;border-top:1px solid var(--rule);padding:12px 0 0}
+  .hero-meta>div{min-width:120px}
+  .hero-meta .k{margin-bottom:1px}
+  .sec-rail{border-top:1px solid var(--ink)}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .wrap{padding:0 20px}
+  .hero{padding:48px 0 44px}
+  section{padding:46px 0}
+  .item{grid-template-columns:34px 1fr}
+  .item .m{display:grid;grid-template-columns:1fr;gap:3px}
+  .item .m span::before{display:none}
+  .item .go{display:none}
+  .diffrow{flex-wrap:wrap}
+  .diffrow .old{flex-basis:100%}
+  .contact h2{font-size:29px}
+}
+
+/* tiga langkah kontak */
+.steps3{list-style:none;counter-reset:st;margin:0;padding:22px 0 0;display:grid;
+  grid-template-columns:repeat(3,1fr);gap:22px;border-top:1px solid var(--rule);max-width:860px}
+.steps3 li{counter-increment:st;font-size:14px;color:var(--ink-3);position:relative;padding-left:26px;margin:0}
+.steps3 li::before{content:counter(st);position:absolute;left:0;top:1px;font-family:var(--mono);
+  font-size:11px;color:var(--accent)}
+.steps3 b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:2px;font-weight:600}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
+/* jaminan + jam kerja */
+.janji{margin-top:30px;padding:22px 0 0;border-top:1px solid var(--rule);max-width:680px}
+.janji p{margin:0 0 12px;font-size:14.5px;color:var(--ink-2)}
+.janji p strong{color:var(--ink)}
+@media (max-width:700px){.steps3{grid-template-columns:1fr;gap:14px}}
+@media (max-width:620px){h1 br{display:none}}
+
+/* target sentuh di layar sentuh */
+@media (max-width:820px){
+  .wa-stamp{min-height:44px}
+  .top-links a{padding:12px 0;display:inline-block}
+  .item{padding-top:26px;padding-bottom:26px}
+}
+#main:focus{outline:none}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke konten</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="./"><b>IKONA</b> / catatan kerja</a>
+    <nav class="top-links">
+      <a href="#layanan" aria-current="true">01 Layanan</a><a href="#work">02 Kerja</a><a href="#how">03 Cara kerja</a><a href="#about">04 Tentang</a><a href="artikel/">Tulisan</a>
+    </nav>
+    <a class="stamp wa-stamp" href="https://wa.me/62XXXXXXXXXX?text=Halo%2C%20saya%20melihat%20portofolio%20Anda%20dan%20ingin%20bertanya." target="_blank" rel="noopener" data-track="wa-nav">WhatsApp ↗</a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <aside class="hero-meta">
+      <div><span class="k">Bidang</span><span class="v">Data &amp; otomasi</span></div>
+      <div><span class="k">Lokasi</span><span class="v">Blitar, Jawa Timur</span></div>
+      <div><span class="k">Status</span><span class="v">Terbuka proyek kecil</span></div>
+      <div><span class="k">Diperbarui</span><span class="v">Okt 2026</span></div>
+    </aside>
+
+    <div>
+      <!-- Varian hero lain, kalau mau diganti:
+     1. "Program kecil untuk pekerjaan yang berulang." (paling datar, paling netral)
+     2. "Saya menulis program untuk bagian pekerjaan yang membosankan."
+     3. "Kerja yang Anda ulang tiap bulan, saya jadikan perintah."
+     4. "Alat kecil, dipakai tiap hari." (paling ringkas, tapi paling samar)
+     5. "Saya lebih suka membuat alat daripada presentasi." (paling berwatak) -->
+      <h1>Saya tidak betah mengerjakan <br>hal yang sama <em>dua kali</em>.</h1>
+      <p class="lede">Pekerjaan yang berulang saya ubah jadi program. Disiapkan sekali, lalu jalan
+        sendiri, dan Anda tinggal memeriksa hasilnya.</p>
+      <p class="who">Untuk usaha yang <strong>sudah jalan</strong> dan prosesnya mulai menyita waktu — bukan yang baru mulai.</p>
+
+      <div class="spec">
+        <div class="spec-row"><span class="lbl">file Excel 5.000 baris</span><span class="val">4,5 detik <em>(dulu 30–60 menit)</em></span></div>
+        <div class="spec-row"><span class="lbl">pemeriksaan otomatis</span><span class="val">114 lulus</span></div>
+        <div class="spec-row"><span class="lbl">job jalan sendiri</span><span class="val">16 per hari bursa</span></div>
+        <div class="spec-row"><span class="lbl">audit keamanan web</span><span class="val">17 pemeriksaan</span></div>
+      </div>
+
+      <div class="actions">
+        <a class="btn" href="#layanan">Lihat layanan &amp; harga</a>
+        <a class="btn ghost" href="#work">Lihat kerja</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="layanan">
+  <div class="wrap sec">
+    <div class="sec-rail"><span class="fig">01</span>Layanan<br>&amp; harga</div>
+    <div>
+      <h2>Harga saya cantumkan. Tidak perlu tanya dulu.</h2>
+      <p class="lede" style="margin-bottom:8px">Diurutkan dari yang paling sering diminta. Yang tidak ada di daftar ini
+        tetap bisa ditanyakan — saya balas dengan perkiraan jujur, termasuk kalau jawabannya "tidak".</p>
+
+      <div class="svc">
+        <div class="svc-row">
+          <div class="svc-head"><h3>Landing page / website usaha</h3><span class="svc-price">Rp1 juta</span></div>
+          <p>Satu halaman yang menjelaskan usaha Anda, siap dibuka dari HP. Termasuk domain dan
+            hosting tahun pertama. Selesai 1–2 minggu — untuk yang <strong>butuh sesuatu yang bisa
+            ditunjukkan</strong> ke calon pelanggan, bukan cuma diketik di chat.</p>
+          <div class="svc-meta"><span>1–2 minggu</span><span>1 halaman</span><span>mulai dari sini</span></div>
+        </div>
+
+        <div class="svc-row">
+          <div class="svc-head"><h3>Integrasi WhatsApp ke sistem Anda</h3><span class="svc-price">Rp1,5 juta</span></div>
+          <p>Saya sambungkan WhatsApp ke sistem yang sudah Anda pakai — toko online, kasir, absensi,
+            atau database. Order masuk tercatat sendiri, pelanggan dapat notifikasi tanpa Anda
+            ketik ulang. <strong>Saya menyambungkan, bukan menjual pulsa atau menanggung biaya
+            pesan.</strong></p>
+          <div class="svc-meta"><span>1–2 minggu</span><span>provider Anda atau saya carikan</span><span>API + webhook</span></div>
+        </div>
+
+        <div class="svc-row">
+          <div class="svc-head"><h3>Aplikasi kasir warung</h3><span class="svc-price">Rp2 juta</span></div>
+          <p>Hitung untung per barang dari harga beli, catat penjualan, ringkasan harian lewat
+            WhatsApp. Tetap jalan saat internet mati. <strong>Custom sesuai alur warung Anda: Rp5–7 juta.</strong></p>
+          <div class="svc-meta"><span>instalasi + pelatihan</span><span>jalan tanpa internet</span><span>printer 58 mm</span></div>
+        </div>
+
+        <div class="svc-row">
+          <div class="svc-head"><h3>Otomasi alur kerja</h3><span class="svc-price">dari Rp3,5 juta</span></div>
+          <p>Untuk pekerjaan yang berpindah tangan tiap hari: pesanan dari WhatsApp masuk ke
+            spreadsheet, laporan disusun sendiri, pengingat terkirim tanpa diingatkan. Saya susun
+            alurnya, saya uji dengan data Anda, lalu saya serahkan beserta dokumentasi.</p>
+          <div class="svc-meta"><span>2–3 minggu</span><span>diuji sebelum diserahkan</span><span>termasuk dokumentasi</span></div>
+        </div>
+
+        <div class="svc-row">
+          <div class="svc-head"><h3>Custom website</h3><span class="svc-price">dari Rp4 juta</span></div>
+          <p>Untuk yang butuh lebih dari satu halaman: katalog produk, form pemesanan, halaman
+            admin, atau sambung ke sistem yang sudah dipakai. Harga naik sesuai tingkat kesulitan —
+            saya sebutkan angkanya di awal, sebelum mulai.</p>
+          <div class="svc-meta"><span>3–8 minggu</span><span>angka pasti di awal</span><span>bertahap</span></div>
+        </div>
+
+        <div class="svc-row">
+          <div class="svc-head"><h3>Konsultasi &amp; audit keamanan software</h3><span class="svc-price">dari Rp5 juta</span></div>
+          <p>Saya periksa website atau aplikasi Anda, lalu kirim laporan tertulis: apa yang bocor,
+            apa yang berisiko, dan mana yang harus dibetulkan lebih dulu — diurutkan, bukan
+            sekadar daftar. Cocok untuk yang <strong>sudah punya aplikasi</strong> dan perlu
+            pendapat kedua sebelum menyerahkan data ke sistem itu.</p>
+          <div class="svc-meta"><span>laporan tertulis</span><span>diurutkan per risiko</span><span>2–3 minggu</span></div>
+        </div>
+      </div>
+
+      <p class="svc-note"><strong>Cara bayar:</strong> separuh di awal, separuh setelah Anda menerima
+        hasilnya. Revisi sampai sesuai deskripsi — tanpa biaya tambahan.</p>
+
+      <div class="wabill">
+        <p class="mono" style="margin:0 0 10px">Soal biaya pesan WhatsApp</p>
+        <p>Biaya pesan WhatsApp ditanggung Anda, dibayar langsung ke provider — bukan lewat saya,
+          dan saya tidak mengambil untung dari situ. Ini penting karena tarifnya berubah menurut
+          volume:</p>
+        <ul>
+          <li><strong>Di bawah 1.000 pesan/bulan, jalur resmi Meta gratis.</strong> Saya sambungkan
+            ke sana dan Anda tidak membayar biaya pesan sama sekali.</li>
+          <li><strong>Di atas 1.000,</strong> saya tunjukkan dua pilihan provider beserta hitungan
+            biayanya pada volume Anda. Anda yang memilih — termasuk kalau pilihannya provider lain
+            yang sudah Anda pakai.</li>
+          <li>Yang tidak saya lakukan: menjual pulsa pesan, atau menanggung biaya pesan lalu
+            menagihnya kembali dengan tanda up. Hitungannya jadi tidak jelas dan Anda tidak bisa
+            memeriksa.</li>
+        </ul>
+        <p class="wabill-note">Kalau provider Anda berhenti beroperasi atau nomor Anda terbatas,
+          yang perlu diganti hanya lapisan penyambungnya — alur kerjanya tetap. Saya bangun
+          pemisahan itu sejak awal supaya Anda tidak terikat ke satu penyedia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap sec">
+    <div class="sec-rail"><span class="fig">02</span>Kerja<br>2025—2026</div>
+    <div>
+      <h2>Yang saya pakai tiap hari</h2>
+      <p class="lede" style="margin-bottom:18px">Tiga alat yang saya bangun untuk pekerjaan sendiri.
+        Yang pertama dan kedua jalan tiap hari; yang ketiga belum.</p>
+      <div class="work">
+<!-- BUILD:KARTU -->
+        <a class="item" href="kasus-cleanscript.html" aria-labelledby="k01">
+          <div class="n">01</div>
+          <div>
+            <h3 id="k01">CleanScript — mesin pembersih data Excel/CSV</h3>
+            <p>File kotor masuk, workbook rapi keluar. 21 format tanggal, CSV titik-koma, sel error Excel — dibersihkan otomatis, dan yang tidak bisa diperbaiki dilaporkan bukan dihapus.</p>
+          </div>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+
+        <a class="item" href="kasus-idx.html" aria-labelledby="k02">
+          <div class="n">02</div>
+          <div>
+            <h3 id="k02">Toolkit riset IDX — pipeline screening otomatis</h3>
+            <p>Skrip menyaring ratusan emiten tiap pagi, menolak yang gagal gerbang halal, lalu mencatat setiap keputusan ke buku simulasi. Aturannya diuji, bukan cuma dipercaya.</p>
+          </div>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+
+<!-- /BUILD:KARTU -->
+        <a class="item" href="#layanan" aria-labelledby="k03">
+          <div class="n">03</div>
+          <div>
+            <h3 id="k03">Kasir Warung — hitung untung per barang</h3>
+            <p>Menghitung untung per barang dari harga beli, mencatat penjualan, dan mengirim ringkasan
+            harian lewat WhatsApp. Tetap jalan saat internet mati.</p>
+            <div class="m"><span>jalan tanpa internet</span><span>printer 58 mm</span><span>status: <b>rencana</b> — engine belum dibangun</span><span>Mobile · SQLite</span></div>
+          </div>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="wrap sec">
+    <div class="sec-rail"><span class="fig">03</span>Cara kerja</div>
+    <div>
+      <h2>AI saya pakai di bagian cepat. Keputusan tetap di saya.</h2>
+      <div class="how">
+        <ol class="steps">
+          <li><b>Pahami masalahnya dulu</b><span>Satu hari membaca data asli dan bicara dengan pemakainya.</span></li>
+          <li><b>Kunci model data</b><span>Struktur yang benar membuat sisanya mudah.</span></li>
+          <li><b>Bikin fiturnya sedikit dulu</b><span>Test-nya yang banyak.</span></li>
+          <li><b>Ukur dulu, baru bilang membaik</b><span>Tanpa angka sebelum dan sesudah, saya belum berani bilang itu perbaikan.</span></li>
+        </ol>
+        <div>
+          <div class="split-table">
+            <div><span class="who">AI</span><span class="what">Boilerplate, migrasi, refactor mekanis, draf test pertama</span></div>
+            <div><span class="who">Saya</span><span class="what">Model data, arsitektur, membaca hasil, verifikasi lewat test</span></div>
+          </div>
+          <div class="rule-note">Aturan: tidak ada kode AI masuk tanpa test.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap sec">
+    <div class="sec-rail"><span class="fig">04</span>Tentang</div>
+    <div class="about">
+      <div>
+        <p class="lead">Saya kerja penuh waktu di bank BUMN sebagai tenaga kontrak. Sisa waktunya saya pakai bikin alat sendiri, kebanyakan karena memang tidak ada yang jual.</p>
+        <p>Fokusnya sempit: data yang berantakan dan proses yang berulang. Saya ambil satu proyek kecil per bulan, supaya tidak dikerjakan setengah-setengah.</p>
+      </div>
+      <dl class="facts">
+        <div><dt>Lokasi</dt><dd>Blitar, Jawa Timur</dd></div>
+        <div><dt>Fokus</dt><dd>Data &amp; otomasi</dd></div>
+        <div><dt>Stack</dt><dd>Python · TS · SQLite</dd></div>
+        <div><dt>Balasan</dt><dd>1–2 hari</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="mono" style="margin-bottom:16px">05 · Kontak</div>
+    <h2>Bagian pekerjaan mana yang Anda kerjakan ulang tiap minggu?</h2>
+    <p>Kirim satu contoh — file, tangkapan layar, atau cerita singkat. Saya balas dalam 1–2 hari
+       dengan perkiraan apakah layak diotomasi, dan kalau tidak, saya bilang tidak.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://wa.me/62XXXXXXXXXX?text=Halo%2C%20saya%20punya%20proses%20manual%20yang%20menyita%20waktu.%20Boleh%20saya%20ceritakan%3F" target="_blank" rel="noopener" data-track="wa-contact">WhatsApp <span class="arrow">→</span></a>
+      <a class="btn ghost" href="mailto:halo@ikona.dev" data-track="email-contact">halo@ikona.dev</a>
+    </div>
+    <ol class="steps3">
+      <li><b>Anda kirim contoh</b><span>Satu file atau satu tangkapan layar sudah cukup.</span></li>
+      <li><b>Saya balas 1–2 hari</b><span>Dengan perkiraan cara kerja, waktu, dan biaya.</span></li>
+      <li><b>Kalau cocok, mulai kecil</b><span>Satu file dulu — bukan proyek besar di awal.</span></li>
+    </ol>
+
+    <div class="janji">
+      <p><strong>Yang saya jamin:</strong> separuh dibayar di awal, separuh setelah Anda menerima
+        hasilnya. Revisi sampai sesuai deskripsi yang kita sepakati, tanpa biaya tambahan.
+        Kalau di tengah jalan ternyata saya tidak bisa menyelesaikannya, uang muka Anda kembali penuh.</p>
+      <p><strong>Kalau nanti ada yang perlu diubah:</strong> tiga bulan pertama setelah serah terima,
+        perbaikan kerusakan dan perubahan kecil tidak dikenai biaya. Setelah itu saya sebutkan
+        biayanya lebih dulu — tidak ada tagihan yang muncul tiba-tiba.</p>
+      <p><strong>Jam saya:</strong> Sabtu dan Minggu sepanjang hari, Senin–Jumat setelah jam 19.00 WIB.
+        Karena itu balasan bisa sampai menyentuh hari berikutnya — tapi tidak pernah lebih dari 2 hari.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 IKONA — catatan kerja</span>
+    <span>Ditulis sendiri. AI cuma alat</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const links = [...document.querySelectorAll('.top-links a')];
+  const map = links.map(a => ({a, el: document.querySelector(a.getAttribute('href'))})).filter(x=>x.el);
+  if(!map.length) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        map.forEach(m => m.a.removeAttribute('aria-current'));
+        const hit = map.find(m => m.el === e.target);
+        if(hit) hit.a.setAttribute('aria-current','true');
+      }
+    });
+  }, {rootMargin:'-45% 0px -45% 0px'});
+  map.forEach(m => io.observe(m.el));
+  // di dekat puncak halaman tidak ada bagian yang "aktif"
+  addEventListener('scroll', ()=>{
+    if(window.scrollY < 240) map.forEach(m => m.a.removeAttribute('aria-current'));
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>

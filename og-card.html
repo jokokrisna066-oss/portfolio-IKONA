@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;box-sizing:border-box}
+  body{width:1200px;height:630px;background:#F6F4EC;color:#141413;
+    font-family:"Instrument Serif",Georgia,serif;position:relative;overflow:hidden}
+  .grid{position:absolute;inset:0;
+    background-image:linear-gradient(rgba(20,20,19,.045) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(20,20,19,.045) 1px,transparent 1px);
+    background-size:48px 48px}
+  .pad{position:absolute;inset:0;padding:64px 72px;display:flex;flex-direction:column;justify-content:space-between}
+  .top{display:flex;justify-content:space-between;align-items:flex-start;
+    font-family:"IBM Plex Mono",monospace;font-size:19px;letter-spacing:.16em;text-transform:uppercase;color:#4A4842}
+  .dot{width:14px;height:14px;border-radius:50%;background:#A8492F;display:inline-block;margin-right:14px;
+    vertical-align:middle;position:relative;top:-2px}
+  h1{font-size:82px;line-height:1.06;letter-spacing:-.02em;font-weight:500;max-width:1000px}
+  h1 em{font-style:italic;color:#A8492F}
+  .bot{display:flex;justify-content:space-between;align-items:flex-end;
+    font-family:"IBM Plex Mono",monospace;font-size:19px;color:#4A4842;letter-spacing:.04em}
+  .rule{height:1px;background:#DCD6C4;margin:28px 0 22px}
+</style></head>
+<body>
+<div class="grid"></div>
+<div class="pad">
+  <div class="top"><span><span class="dot"></span>IKONA</span><span>Blitar · 2026</span></div>
+  <h1>Saya tidak betah mengerjakan<br>hal yang sama <em>dua kali</em>.</h1>
+  <div>
+    <div class="rule"></div>
+    <div class="bot"><span>Program kecil untuk pekerjaan yang berulang</span><span>ikona.dev</span></div>
+  </div>
+</div>
+</body></html>
