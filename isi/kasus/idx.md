@@ -1,5 +1,5 @@
 ---
-judul: Toolkit riset IDX — pipeline screening otomatis
+judul: Toolkit riset IDX, saringan saham otomatis
 tanggal: 2026-11-02
 jenis: kasus
 ringkas: Skrip menyaring ratusan emiten tiap pagi, menolak yang gagal gerbang halal, lalu mencatat setiap keputusan ke buku simulasi. Aturannya diuji, bukan cuma dipercaya.
@@ -13,27 +13,27 @@ status: Jalan tiap hari
 
 Menyaring saham manual selalu berakhir sama: daftar hari ini berbeda dari daftar
 kemarin, alasannya tidak tercatat, dan tidak ada yang bisa menjawab pertanyaan
-paling penting — **apakah metodenya benar, atau cuma kebetulan sedang bagus?**
+paling penting: **apakah metodenya benar, atau cuma kebetulan sedang bagus?**
 
 Tanpa jejak, setiap keputusan jadi cerita ulang. Yang rugi diingat sebagai
 "pasar sedang jelek", yang untung diingat sebagai "analisis saya jeli".
 
-Jadi yang saya bangun adalah **sistem yang bisa disalahkan** — yang mencatat
-alasannya sendiri, dan menyimpan hasilnya walau hasilnya jelek.
+Jadi yang saya bangun adalah **sistem yang bisa disalahkan**. Yang mencatat alasannya
+sendiri, dan menyimpan hasilnya walau hasilnya jelek.
 
 ## Tiga keputusan yang menentukan bentuk sistemnya
 
-### 1. Skor, bukan daftar
+### 1. Semua dinilai, lalu diurutkan
 
-Setiap emiten dinilai dengan komponen berbobot — bandarmologi, valuasi, volume,
-teknikal, ROE, arus dana, momentum — lalu diurutkan. Aturannya sama tiap hari,
-jadi perbedaan hasil hanya bisa berasal dari data, bukan dari suasana hati.
+Setiap saham dinilai dengan beberapa komponen berbobot: bandarmologi, valuasi, volume,
+teknikal, ROE, arus dana, dan momentum. Lalu diurutkan. Aturannya sama tiap hari, jadi beda hasilnya cuma bisa datang dari data, tidak dari
+suasana hati.
 
 ### 2. Gerbang halal yang menelusuri lini usaha
 
-Label indeks syariah tidak cukup. Setiap kandidat ditelusuri bidang usahanya lewat
-rantai sumber: data sektor, profil emiten, lalu pencarian langsung — dengan
-kutipan sebagai bukti. Yang tidak bisa diverifikasi berstatus `unknown` dan
+Label indeks syariah tidak cukup. Tiap kandidat ditelusuri bidang usahanya lewat rantai
+sumber: data sektor, profil perusahaan, lalu pencarian langsung, dengan kutipan
+sebagai bukti. Yang tidak bisa diverifikasi berstatus `unknown` dan
 otomatis ditolak.
 
 ### 3. Buku simulasi sebagai hakim
@@ -56,15 +56,13 @@ Diperiksa 19 Nov 2026 dari state skrip di server.
 
 Angka ini berubah; tanggalnya sengaja dicantumkan supaya bisa diperiksa.
 
-Aturan strateginya saya uji di buku simulasi, terpisah dari halaman ini. Hasilnya
-sengaja tidak dipublikasikan di sini — halaman ini tentang alatnya, bukan
+Aturan strateginya saya uji di buku simulasi, terpisah dari halaman ini. Hasilnya sengaja tidak dipublikasikan di sini. Halaman ini tentang alatnya, bukan
 tentang sinyal.
 
 ## Yang masih belum beres
 
-- **Buktinya masih pendek.** Rekam jejaknya baru berjalan sejak 23 Oktober 2026 —
-  itu belum membuktikan apa pun. Yang bisa dinilai sekarang adalah mesinnya,
-  bukan hasilnya.
+- **Buktinya masih pendek.** Rekam jejaknya baru berjalan sejak 23 Oktober 2026, dan
+  itu belum membuktikan apa pun. Yang bisa dinilai sekarang mesinnya, belum hasilnya.
 - **Harga memakai penutupan, bukan real-time.** Cukup untuk menguji aturan, tidak
   cukup untuk mengeksekusi.
 - **Token bersifat pribadi.** Sistem ini bergantung pada akun data pribadi, jadi

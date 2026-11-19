@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Toolkit riset IDX — pipeline screening otomatis — Studi kasus · IKONA</title>
+<title>Toolkit riset IDX, saringan saham otomatis — Studi kasus · IKONA</title>
 <meta name="description" content="Skrip menyaring ratusan emiten tiap pagi, menolak yang gagal gerbang halal, lalu mencatat setiap keputusan ke buku simulasi. Aturannya diuji, bukan cuma dipercaya.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Toolkit riset IDX — pipeline screening otomatis">
+<meta property="og:title" content="Toolkit riset IDX, saringan saham otomatis">
 <meta property="og:description" content="Skrip menyaring ratusan emiten tiap pagi, menolak yang gagal gerbang halal, lalu mencatat setiap keputusan ke buku simulasi. Aturannya diuji, bukan cuma dipercaya.">
 <meta property="og:image" content="https://ikona.dev/og.png">
 <meta property="og:image:width" content="1200">
@@ -152,7 +152,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <div class="head">
   <div class="wrap">
     <span class="mono">Studi kasus</span>
-    <h1>Toolkit riset IDX — pipeline screening otomatis</h1>
+    <h1>Toolkit riset IDX, saringan saham otomatis</h1>
     <p class="lede">Skrip menyaring ratusan emiten tiap pagi, menolak yang gagal gerbang halal, lalu mencatat setiap keputusan ke buku simulasi. Aturannya diuji, bukan cuma dipercaya.</p>
     <div class="meta">
       <span><b><time datetime="2026-11-02">02 Nov 2026</time></b></span>
@@ -167,7 +167,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <ul>
 <li><a href="#masalah">Masalah</a></li>
 <li><a href="#tiga-keputusan-yang-menentukan-bentuk-sistemnya">Tiga keputusan yang menentukan bentuk sistemnya</a><ul>
-<li><a href="#1-skor-bukan-daftar">1. Skor, bukan daftar</a></li>
+<li><a href="#1-semua-dinilai-lalu-diurutkan">1. Semua dinilai, lalu diurutkan</a></li>
 <li><a href="#2-gerbang-halal-yang-menelusuri-lini-usaha">2. Gerbang halal yang menelusuri lini usaha</a></li>
 <li><a href="#3-buku-simulasi-sebagai-hakim">3. Buku simulasi sebagai hakim</a></li>
 </ul>
@@ -179,20 +179,20 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 </div><h2 id="masalah">Masalah</h2>
 <p>Menyaring saham manual selalu berakhir sama: daftar hari ini berbeda dari daftar
 kemarin, alasannya tidak tercatat, dan tidak ada yang bisa menjawab pertanyaan
-paling penting — <strong>apakah metodenya benar, atau cuma kebetulan sedang bagus?</strong></p>
+paling penting: <strong>apakah metodenya benar, atau cuma kebetulan sedang bagus?</strong></p>
 <p>Tanpa jejak, setiap keputusan jadi cerita ulang. Yang rugi diingat sebagai
 &ldquo;pasar sedang jelek&rdquo;, yang untung diingat sebagai &ldquo;analisis saya jeli&rdquo;.</p>
-<p>Jadi yang saya bangun adalah <strong>sistem yang bisa disalahkan</strong> — yang mencatat
-alasannya sendiri, dan menyimpan hasilnya walau hasilnya jelek.</p>
+<p>Jadi yang saya bangun adalah <strong>sistem yang bisa disalahkan</strong>. Yang mencatat alasannya
+sendiri, dan menyimpan hasilnya walau hasilnya jelek.</p>
 <h2 id="tiga-keputusan-yang-menentukan-bentuk-sistemnya">Tiga keputusan yang menentukan bentuk sistemnya</h2>
-<h3 id="1-skor-bukan-daftar">1. Skor, bukan daftar</h3>
-<p>Setiap emiten dinilai dengan komponen berbobot — bandarmologi, valuasi, volume,
-teknikal, ROE, arus dana, momentum — lalu diurutkan. Aturannya sama tiap hari,
-jadi perbedaan hasil hanya bisa berasal dari data, bukan dari suasana hati.</p>
+<h3 id="1-semua-dinilai-lalu-diurutkan">1. Semua dinilai, lalu diurutkan</h3>
+<p>Setiap saham dinilai dengan beberapa komponen berbobot: bandarmologi, valuasi, volume,
+teknikal, ROE, arus dana, dan momentum. Lalu diurutkan. Aturannya sama tiap hari, jadi beda hasilnya cuma bisa datang dari data, tidak dari
+suasana hati.</p>
 <h3 id="2-gerbang-halal-yang-menelusuri-lini-usaha">2. Gerbang halal yang menelusuri lini usaha</h3>
-<p>Label indeks syariah tidak cukup. Setiap kandidat ditelusuri bidang usahanya lewat
-rantai sumber: data sektor, profil emiten, lalu pencarian langsung — dengan
-kutipan sebagai bukti. Yang tidak bisa diverifikasi berstatus <code>unknown</code> dan
+<p>Label indeks syariah tidak cukup. Tiap kandidat ditelusuri bidang usahanya lewat rantai
+sumber: data sektor, profil perusahaan, lalu pencarian langsung, dengan kutipan
+sebagai bukti. Yang tidak bisa diverifikasi berstatus <code>unknown</code> dan
 otomatis ditolak.</p>
 <h3 id="3-buku-simulasi-sebagai-hakim">3. Buku simulasi sebagai hakim</h3>
 <p>Tiga buku berjalan berdampingan dengan aturan berbeda. Semua mulai dari modal
@@ -231,14 +231,12 @@ dibandingkan tanpa pembelaan.</p>
 </tbody>
 </table>
 <p>Angka ini berubah; tanggalnya sengaja dicantumkan supaya bisa diperiksa.</p>
-<p>Aturan strateginya saya uji di buku simulasi, terpisah dari halaman ini. Hasilnya
-sengaja tidak dipublikasikan di sini — halaman ini tentang alatnya, bukan
+<p>Aturan strateginya saya uji di buku simulasi, terpisah dari halaman ini. Hasilnya sengaja tidak dipublikasikan di sini. Halaman ini tentang alatnya, bukan
 tentang sinyal.</p>
 <h2 id="yang-masih-belum-beres">Yang masih belum beres</h2>
 <ul>
-<li><strong>Buktinya masih pendek.</strong> Rekam jejaknya baru berjalan sejak 23 Oktober 2026 —
-  itu belum membuktikan apa pun. Yang bisa dinilai sekarang adalah mesinnya,
-  bukan hasilnya.</li>
+<li><strong>Buktinya masih pendek.</strong> Rekam jejaknya baru berjalan sejak 23 Oktober 2026, dan
+  itu belum membuktikan apa pun. Yang bisa dinilai sekarang mesinnya, belum hasilnya.</li>
 <li><strong>Harga memakai penutupan, bukan real-time.</strong> Cukup untuk menguji aturan, tidak
   cukup untuk mengeksekusi.</li>
 <li><strong>Token bersifat pribadi.</strong> Sistem ini bergantung pada akun data pribadi, jadi

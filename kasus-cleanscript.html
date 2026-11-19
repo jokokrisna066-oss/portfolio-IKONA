@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CleanScript — mesin pembersih data Excel/CSV — Studi kasus · IKONA</title>
-<meta name="description" content="File kotor masuk, workbook rapi keluar. 21 format tanggal, CSV titik-koma, sel error Excel — dibersihkan otomatis, dan yang tidak bisa diperbaiki dilaporkan bukan dihapus.">
+<title>CleanScript, pembersih data Excel/CSV — Studi kasus · IKONA</title>
+<meta name="description" content="File berantakan masuk, workbook rapi keluar. Tanggal 21 format, CSV titik-koma, sel error Excel. Yang tidak bisa dibereskan otomatis dilaporkan di lembar terpisah, tidak dihapus.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CleanScript — mesin pembersih data Excel/CSV">
-<meta property="og:description" content="File kotor masuk, workbook rapi keluar. 21 format tanggal, CSV titik-koma, sel error Excel — dibersihkan otomatis, dan yang tidak bisa diperbaiki dilaporkan bukan dihapus.">
+<meta property="og:title" content="CleanScript, pembersih data Excel/CSV">
+<meta property="og:description" content="File berantakan masuk, workbook rapi keluar. Tanggal 21 format, CSV titik-koma, sel error Excel. Yang tidak bisa dibereskan otomatis dilaporkan di lembar terpisah, tidak dihapus.">
 <meta property="og:image" content="https://ikona.dev/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -152,8 +152,8 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <div class="head">
   <div class="wrap">
     <span class="mono">Studi kasus</span>
-    <h1>CleanScript — mesin pembersih data Excel/CSV</h1>
-    <p class="lede">File kotor masuk, workbook rapi keluar. 21 format tanggal, CSV titik-koma, sel error Excel — dibersihkan otomatis, dan yang tidak bisa diperbaiki dilaporkan bukan dihapus.</p>
+    <h1>CleanScript, pembersih data Excel/CSV</h1>
+    <p class="lede">File berantakan masuk, workbook rapi keluar. Tanggal 21 format, CSV titik-koma, sel error Excel. Yang tidak bisa dibereskan otomatis dilaporkan di lembar terpisah, tidak dihapus.</p>
     <div class="meta">
       <span><b><time datetime="2026-11-02">02 Nov 2026</time></b></span>
       <span>Dibaca <b>±2 menit</b></span>
@@ -167,9 +167,9 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <ul>
 <li><a href="#masalah">Masalah</a></li>
 <li><a href="#tiga-keputusan-yang-menentukan-bentuk-aplikasi">Tiga keputusan yang menentukan bentuk aplikasi</a><ul>
-<li><a href="#1-deteksi-format-bukan-menebak">1. Deteksi format, bukan menebak</a></li>
-<li><a href="#2-sampling-200-nilai-bukan-seluruh-file">2. Sampling 200 nilai, bukan seluruh file</a></li>
-<li><a href="#3-audit-bukan-hapus-diam-diam">3. Audit, bukan hapus diam-diam</a></li>
+<li><a href="#1-format-dikenali-dari-isinya">1. Format dikenali dari isinya</a></li>
+<li><a href="#2-sampling-200-nilai-per-kolom">2. Sampling 200 nilai per kolom</a></li>
+<li><a href="#3-baris-bermasalah-masuk-lembar-terpisah">3. Baris bermasalah masuk lembar terpisah</a></li>
 </ul>
 </li>
 <li><a href="#bukti">Bukti</a></li>
@@ -180,24 +180,23 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <p>Pemilik usaha mengirim file yang terlihat wajar di Excel. Di dalamnya: tanggal yang
 setengahnya teks, angka dengan &ldquo;Rp&rdquo; dan titik ribuan, baris judul di atas header,
 dan kolom yang isinya campur antara nilai dan <code>#REF!</code>.</p>
-<p>Membersihkan manual butuh 30–60 menit per file — dan hasilnya tidak bisa diaudit.
+<p>Membersihkan manual butuh 30–60 menit per file, dan hasilnya tidak bisa diaudit.
 Kalau ada satu baris hilang, tidak ada yang tahu.</p>
-<p><strong>Yang saya jaga: setiap perubahan harus bisa ditunjuk balik ke baris asalnya.</strong>
-Cepat tapi tidak bisa dilacak, buat saya belum selesai.</p>
+<p><strong>Yang saya jaga: tiap perubahan harus bisa ditunjuk balik ke baris asalnya.</strong> Cepat
+tapi tidak bisa dilacak, buat saya belum selesai.</p>
 <h2 id="tiga-keputusan-yang-menentukan-bentuk-aplikasi">Tiga keputusan yang menentukan bentuk aplikasi</h2>
-<h3 id="1-deteksi-format-bukan-menebak">1. Deteksi format, bukan menebak</h3>
+<h3 id="1-format-dikenali-dari-isinya">1. Format dikenali dari isinya</h3>
 <p>Parser mendukung 21 format tanggal: nama bulan Indonesia (termasuk <code>Peb</code>, <code>Agt</code>,
 <code>Nop</code>), nama hari, format ringkas <code>YYYYMMDD</code>, serial Excel 20000–60000, dan ISO+Z
 yang dipaksa year-first supaya <code>2026-10-12T08:15:30Z</code> tidak terbaca Desember.</p>
-<h3 id="2-sampling-200-nilai-bukan-seluruh-file">2. Sampling 200 nilai, bukan seluruh file</h3>
+<h3 id="2-sampling-200-nilai-per-kolom">2. Sampling 200 nilai per kolom</h3>
 <p>Deteksi kolom angka memakai sampel. Efeknya pada file 5.000 × 20: inspeksi
-<strong>7,8 detik → 4,5 detik</strong>. Placeholder seperti <code>#REF!</code>, <code>-</code>, <code>N/A</code> tidak dihitung
-sebagai &ldquo;bukan angka&rdquo;, supaya satu kolom uang yang punya 3 sel rusak tetap
-terdeteksi sebagai uang.</p>
-<h3 id="3-audit-bukan-hapus-diam-diam">3. Audit, bukan hapus diam-diam</h3>
-<p>Baris bermasalah tidak dibuang. Ia masuk sheet keempat — <code>Data_Perlu_Dicek</code> —
-berisi lokasi baris, kolom, nilai asli, dan jenis masalahnya. Tanggal mustahil
-seperti <code>31/02/2026</code> dibiarkan apa adanya dengan tanda, bukan dikoreksi tanpa izin.</p>
+<strong>7,8 detik → 4,5 detik</strong>. Placeholder seperti <code>#REF!</code>, <code>-</code>, <code>N/A</code> tidak ikut dihitung, supaya satu kolom uang
+yang punya 3 sel rusak tetap terbaca sebagai uang.</p>
+<h3 id="3-baris-bermasalah-masuk-lembar-terpisah">3. Baris bermasalah masuk lembar terpisah</h3>
+<p>Baris bermasalah tidak dibuang. Ia masuk sheet keempat, <code>Data_Perlu_Dicek</code>, berisi
+lokasi baris, kolom, nilai asli, dan jenis masalahnya. Tanggal mustahil seperti <code>31/02/2026</code> dibiarkan apa adanya dengan tanda, tidak
+dikoreksi diam-diam.</p>
 <h2 id="bukti">Bukti</h2>
 <p>File 5.000 baris × 20 kolom, campuran tanggal rusak, angka berformat, dan sel error.</p>
 <figure>
@@ -207,7 +206,8 @@ seperti <code>31/02/2026</code> dibiarkan apa adanya dengan tanda, bukan dikorek
 
 <figure>
 <img src="shots-deploy/03-hasil.png" width="1280" height="577" alt="Layar pengaturan aturan pembersihan CleanScript: hapus baris kosong, rapikan spasi, normalisasi kapitalisasi, hapus duplikat identik, standarisasi tanggal, normalisasi angka dan uang, serta opsi AI insight DeepSeek">
-<figcaption>Aturan yang bisa dipilih sebelum dijalankan. Tidak ada yang diubah tanpa Anda centang — AI hanya menjelaskan, tidak pernah mengubah data sendiri.</figcaption>
+<figcaption>Aturan yang bisa dipilih sebelum dijalankan. Tidak ada yang diubah tanpa Anda centang. AI cuma menjelaskan, tidak pernah mengubah
+data sendiri.</figcaption>
 </figure>
 
 <table>
@@ -241,9 +241,8 @@ seperti <code>31/02/2026</code> dibiarkan apa adanya dengan tanda, bukan dikorek
 Serial Excel <code>45678</code> → <code>2025-01-21</code>.</p>
 <h2 id="yang-masih-belum-beres">Yang masih belum beres</h2>
 <ul>
-<li><strong>Nomor HP belum diseragamkan.</strong> Kolom nomor telepon keluar apa adanya —
-  <code>0812-3456-7890</code>, <code>081298765432</code>, <code>0813 1111 2222</code> tetap berbeda-beda. Padahal
-  itu kolom yang paling sering mau dipakai untuk kirim WhatsApp massal.</li>
+<li><strong>Nomor HP belum diseragamkan.</strong> Kolom nomor telepon keluar apa adanya:
+  <code>0812-3456-7890</code>, <code>081298765432</code>, <code>0813 1111 2222</code> tetap beda-beda. Padahal itu kolom yang paling sering mau dipakai untuk kirim WhatsApp massal.</li>
 <li><strong>Jam rusak membuang tanggal valid.</strong> <code>2026-10-12 25:99</code> tetap jadi 2026-10-12,
   tapi penanda jamnya hilang tanpa catatan.</li>
 <li><strong>File 10 MB ke atas.</strong> Di atas 5.000 baris, waktu proses mulai terasa; target

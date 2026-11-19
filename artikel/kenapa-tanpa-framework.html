@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kenapa situs ini sengaja tidak memakai framework — Tulisan · IKONA</title>
-<meta name="description" content="Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan — dan angka yang menentukan, bukan tren.">
+<meta name="description" content="Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan. Yang menentukan angka, bukan tren.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kenapa situs ini sengaja tidak memakai framework">
-<meta property="og:description" content="Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan — dan angka yang menentukan, bukan tren.">
+<meta property="og:description" content="Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan. Yang menentukan angka, bukan tren.">
 <meta property="og:image" content="https://ikona.dev/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -153,7 +153,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <div class="wrap">
     <span class="mono">Tulisan</span>
     <h1>Kenapa situs ini sengaja tidak memakai framework</h1>
-    <p class="lede">Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan — dan angka yang menentukan, bukan tren.</p>
+    <p class="lede">Tiga halaman statis, satu permintaan, nol JavaScript. Saya ukur dua-duanya sebelum memutuskan. Yang menentukan angka, bukan tren.</p>
     <div class="meta">
       <span><b><time datetime="2026-11-19">19 Nov 2026</time></b></span>
       <span>Dibaca <b>±2 menit</b></span>
@@ -203,7 +203,7 @@ yang wajar: saya memang membangun aplikasi Next.js untuk pekerjaan lain.</p>
 <tr>
 <td>first contentful paint</td>
 <td><strong>172 ms</strong></td>
-<td>—</td>
+<td>tidak diukur</td>
 </tr>
 <tr>
 <td>DOMContentLoaded</td>
@@ -213,26 +213,24 @@ yang wajar: saya memang membangun aplikasi Next.js untuk pekerjaan lain.</p>
 </tbody>
 </table>
 <p>Aplikasi Next.js itu <strong>perlu</strong> 118 KB itu. Ia punya formulir, unggah berkas,
-tab, dan state yang berubah. Situs ini tidak punya satu pun dari itu — satu-satunya
-JavaScript di sini 20 baris, untuk menandai menu mana yang sedang dibaca saat
-menggulir.</p>
+tab, dan state yang berubah. Situs ini tidak punya satu pun dari itu. JavaScript-nya cuma 20 baris, untuk
+menandai menu mana yang sedang dibaca saat menggulir.</p>
 <p>118 KB untuk menggantikan 20 baris bukan pertukaran yang menguntungkan.</p>
 <h2 id="yang-sering-dianggap-masalah-tapi-bukan">Yang sering dianggap masalah, tapi bukan</h2>
 <p>Kekhawatiran berikutnya biasanya soal perawatan: tanpa komponen, CSS-nya
 berulang di tiap halaman, bukan?</p>
 <p>Saya periksa. Dari tiga halaman, deklarasi CSS yang identik di ketiganya:
-<strong>satu baris.</strong> Palet <code>:root</code> memang disalin tiga kali — enam baris. Itu 2% dari
-berkas pertama, bukan masalah.</p>
-<p>&ldquo;Berulang&rdquo; jadi masalah ketika halamannya ratusan. Di tiga halaman, itu bukan
-biaya — itu kesederhanaan.</p>
+<strong>satu baris.</strong> Palet <code>:root</code> memang disalin tiga kali, dan itu cuma enam baris. Dua persen dari
+berkas pertama. Bukan masalah.</p>
+<p>&ldquo;Berulang&rdquo; jadi masalah ketika halamannya ratusan. Di tiga halaman, itu bukan biaya. Itu kesederhanaan.</p>
 <h2 id="kapan-jawabannya-berubah">Kapan jawabannya berubah</h2>
 <p>Saya tidak akan mempertahankan pilihan ini demi gengsi. Tiga hal membaliknya:</p>
 <ol>
 <li><strong>Ada bagian yang butuh data.</strong> Daftar proyek dari API, atau halaman yang
    tumbuh tanpa saya sentuh HTML-nya.</li>
 <li><strong>Isinya berubah terus, dan saya lelah menyunting HTML.</strong> Itu sebabnya tulisan
-   dan studi kasus di situs ini sekarang ditulis di markdown — saya hanya
-   menyentuh HTML kalau bentuk halamannya berubah.</li>
+   dan studi kasus di situs ini sekarang ditulis di markdown. Saya cuma menyentuh
+   HTML kalau bentuk halamannya berubah.</li>
 <li><strong>Klien yang saya bidik menanyakan stack-nya.</strong> Sewaktu kecil, tidak.</li>
 </ol>
 <p>Perhatikan bahwa alasan nomor dua sudah terjadi, dan saya menyelesaikannya
@@ -243,12 +241,12 @@ statis. Yang dinamis hanya saat menulis, bukan saat dibaca.</p>
 menilai stack-nya, jadi pakai yang modern.</p>
 <p>Tapi ada versi argumen itu yang berlawanan arah. Situs yang memutuskan
 arsitekturnya dengan angka yang bisa diperiksa membuktikan penilaian. Situs yang
-menyalakan framework untuk tiga halaman statis membuktikan bisa menyalakan
-framework — dan itu bukan hal yang sama.</p>
+menyalakan framework untuk tiga halaman statis cuma membuktikan bisa menyalakan
+framework. Itu lain hal.</p>
 <p>Saya menjual kemampuan mengambil proses manual dan membuatnya jalan sendiri,
 dengan batas yang jelas. <strong>Keputusan soal alat adalah bagian dari pekerjaan itu.</strong>
-Jadi keputusan di sini saya catat di <code>README</code>, bukan disembunyikan — supaya bisa
-dibantah, dan supaya saya tidak mengulang perdebatan yang sama enam bulan lagi.</p></div>
+Jadi keputusan di sini saya catat di <code>README</code>. Bukan buat dipamerkan, tapi supaya
+bisa dibantah, dan supaya saya tidak mengulang perdebatan yang sama enam bulan lagi.</p></div>
   </div>
 </article>
 
