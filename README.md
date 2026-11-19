@@ -33,6 +33,26 @@ jangan menyebar. Seluruh pasangan warna sudah lolos WCAG AA.
 kecil, karena itu `html{scroll-padding-top:104px}` wajib ada supaya tautan
 anchor tidak tertutup.
 
+## Kenapa tampilannya seperti ini (jangan dirusak saat menyunting)
+
+Wataknya datang dari keputusan yang sengaja, bukan dari hiasan. Kalau salah satu
+dilanggar, halaman ini langsung terbaca seperti template:
+
+- **Serif dengan italic asli.** `Instrument Serif` punya potongan italic sungguhan,
+  bukan kemiringan buatan. Itu yang membuat `dua kali` terasa ditulis, bukan dimiringkan.
+- **Terakota dipakai sekali per layar.** Hanya pada satu frasa di hero. Menyebarkan
+  aksen ke tombol, ikon, dan label akan menghapus efeknya.
+- **Tanpa kartu, tanpa bayangan.** Hanya garis rambut dan angka. Ini yang membedakan
+  dari dashboard SaaS.
+- **Label mono huruf besar dengan tracking lebar.** Terasa lembar spesifikasi, bukan
+  panel admin.
+- **Kisi kertas sebagai latar.** Bukan gradien, bukan blob, bukan mesh.
+- **Judulnya kalimat tentang watak, bukan nilai jual.** "Saya tidak betah mengerjakan
+  hal yang sama dua kali" bukan "Solusi Digital untuk Bisnis Anda".
+
+Aturan praktis: **kalau sebuah perubahan membuat halaman lebih mirip template
+landing page pada umumnya, jangan dilakukan** — meski terlihat lebih "modern".
+
 ## Sebelum mengirim tautan ke siapa pun
 
 - [ ] Nomor WhatsApp sudah nomor asli (cari `62XXXXXXXXXX` — ada 5 tempat)
